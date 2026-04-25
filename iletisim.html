@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İletişim — Yelken Perde | Sultanbeyli İstanbul</title>
+<meta name="description" content="Yelken Perde iletişim: Orhangazi Mah. Eşref Bitlis Blv. No:86 Sultanbeyli/İstanbul. Telefon: 0542 331 34 13. Ücretsiz keşif ve randevu.">
+<link rel="canonical" href="https://yelkenperde.com/iletisim.html">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 0;
+    min-height: 80vh;
+  }
+
+  .contact-info-side {
+    background: var(--cream);
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .contact-info-side h2 {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--charcoal);
+    margin-bottom: 16px;
+  }
+
+  .contact-info-side h2 em { font-style: italic; color: var(--gold); }
+
+  .contact-info-side > p {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--stone);
+    margin-bottom: 40px;
+  }
+
+  .contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .contact-info-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--linen);
+  }
+
+  .contact-info-item:last-child { border-bottom: none; }
+
+  .contact-info-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--warm-white);
+    border: 1px solid var(--linen);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-info-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  .contact-info-text {
+    flex: 1;
+  }
+
+  .contact-info-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 4px;
+  }
+
+  .contact-info-value {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+
+  .contact-info-value a {
+    color: var(--charcoal);
+    transition: color 0.3s;
+  }
+
+  .contact-info-value a:hover { color: var(--gold); }
+
+  .contact-info-sub {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--stone);
+    margin-top: 2px;
+  }
+
+  /* FORM SIDE */
+  .contact-form-side {
+    background: var(--warm-white);
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .form-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .contact-form-side h3 {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--charcoal);
+    margin-bottom: 14px;
+  }
+
+  .contact-form-side > p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--stone);
+    margin-bottom: 32px;
+  }
+
+  #contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  #contact-form button {
+    margin-top: 8px;
+    align-self: flex-start;
+  }
+
+  .form-note {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--stone);
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  /* MAP SECTION */
+  .map-section {
+    padding: 80px 80px;
+    background: var(--charcoal);
+  }
+
+  .map-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .map-header .section-eyebrow { color: var(--gold-light); }
+  .map-header .section-title { color: white; margin: 0 auto 14px; }
+  .map-header .section-desc { color: rgba(201,188,168,0.75); margin: 0 auto; }
+
+  .map-frame {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .map-frame iframe {
+    display: block;
+    width: 100%;
+    height: 480px;
+    border: none;
+  }
+
+  .map-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .map-actions .btn-secondary {
+    background: transparent;
+    border-color: rgba(255,255,255,0.2);
+    color: var(--sand);
+  }
+
+  .map-actions .btn-secondary:hover {
+    border-color: var(--gold);
+    color: white;
+  }
+
+  /* SAAT TABLOSU */
+  .hours-section {
+    padding: 80px 80px;
+    background: var(--cream-dark);
+  }
+
+  .hours-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hours-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--linen);
+  }
+
+  .hours-item:last-child { border-bottom: none; }
+
+  .hours-day {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--charcoal);
+  }
+
+  .hours-time {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .hours-item.closed .hours-time {
+    color: var(--stone);
+    font-style: italic;
+  }
+
+  @media (max-width: 900px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-info-side, .contact-form-side { padding: 56px 24px; }
+    .contact-info-side h2 { font-size: 32px; }
+    .form-row { grid-template-columns: 1fr; }
+    .map-section, .hours-section { padding: 56px 24px; }
+    .hours-grid { grid-template-columns: 1fr; gap: 32px; }
+    .map-frame iframe { height: 340px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo-nav.png" alt="Yelken Perde">
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="urunler.html">Ürünler</a></li>
+    <li><a href="galeri.html">Galeri</a></li>
+    <li><a href="hakkimizda.html">Hakkımızda</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="iletisim.html" class="active">İletişim</a></li>
+    <li><a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="nav-cta" target="_blank">Randevu Al</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Ana Sayfa</a>
+    <span>/</span>
+    <span>İletişim</span>
+  </div>
+  <p class="section-eyebrow">Bize Ulaşın</p>
+  <h1 class="section-title">Size Nasıl<br><em>Yardımcı Olabiliriz?</em></h1>
+  <p class="section-desc">
+    Sorularınız, teklif talepleriniz veya keşif randevusu için bize aşağıdaki yollardan ulaşabilirsiniz.
+  </p>
+</header>
+
+<!-- İLETİŞİM BİLGİLERİ + FORM -->
+<section class="contact-layout">
+  <!-- SOL - Bilgiler -->
+  <div class="contact-info-side reveal">
+    <p class="section-eyebrow">İletişim Bilgilerimiz</p>
+    <h2>Sizi <em>Dinlemeye</em> Hazırız</h2>
+    <p>Telefon, WhatsApp, e-posta veya dükkânımıza gelerek bize ulaşabilirsiniz. Soru sormak için alışveriş yapmak zorunda değilsiniz.</p>
+
+    <div class="contact-info-list">
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="contact-info-text">
+          <div class="contact-info-label">Telefon</div>
+          <div class="contact-info-value"><a href="tel:+905423313413">0542 331 34 13</a></div>
+          <div class="contact-info-sub">Pazartesi–Cumartesi · 09:00–21:00</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon" style="background: #E8F5E9; border-color: #C8E6C9;">
+          <svg viewBox="0 0 24 24" fill="#25D366" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        </div>
+        <div class="contact-info-text">
+          <div class="contact-info-label">WhatsApp</div>
+          <div class="contact-info-value"><a href="https://wa.me/905423313413" target="_blank">0542 331 34 13</a></div>
+          <div class="contact-info-sub">Genellikle 30 dakika içinde yanıtlıyoruz</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="contact-info-text">
+          <div class="contact-info-label">E-posta</div>
+          <div class="contact-info-value"><a href="mailto:info@yelkenperde.com">info@yelkenperde.com</a></div>
+          <div class="contact-info-sub">24 saat içinde yanıt veriyoruz</div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="contact-info-text">
+          <div class="contact-info-label">Adres</div>
+          <div class="contact-info-value">Orhangazi Mah.<br>Eşref Bitlis Blv. No:86<br>34925 Sultanbeyli / İstanbul</div>
+          <div class="contact-info-sub"><a href="https://www.google.com/maps/search/?api=1&query=Orhangazi+Eşref+Bitlis+Bulvarı+86+Sultanbeyli" target="_blank" style="color: var(--gold);">Yol Tarifi Al →</a></div>
+        </div>
+      </div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+        </div>
+        <div class="contact-info-text">
+          <div class="contact-info-label">Instagram</div>
+          <div class="contact-info-value"><a href="https://instagram.com/yelken.perde" target="_blank">@yelken.perde</a></div>
+          <div class="contact-info-sub">Yeni projelerimizi paylaşıyoruz</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SAĞ - Form -->
+  <div class="contact-form-side reveal">
+    <p class="form-eyebrow">Bize Yazın</p>
+    <h3>Teklif Almak veya <em style="font-style: italic; color: var(--gold);">Randevu</em><br>Oluşturmak İçin</h3>
+    <p>Aşağıdaki formu doldurarak veya doğrudan WhatsApp üzerinden bize ulaşın. Talebinizi aldığımızda en kısa sürede dönüş yapıyoruz.</p>
+
+    <form id="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Adınız Soyadınız</label>
+          <input type="text" id="name" name="name" required placeholder="Ör. Ayşe Yılmaz">
+        </div>
+        <div class="form-group">
+          <label for="phone">Telefon</label>
+          <input type="tel" id="phone" name="phone" required placeholder="0 5XX XXX XX XX">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="service">Hangi ürün hakkında bilgi almak istiyorsunuz?</label>
+        <select id="service" name="service">
+          <option value="">Seçiniz</option>
+          <option value="ahsap-jaluzi">Ahşap Jaluzi</option>
+          <option value="zebra-perde">Zebra Perde</option>
+          <option value="stor-perde">Stor Perde</option>
+          <option value="tul-perde">Tül Perde</option>
+          <option value="fon-perde">Fon Perde</option>
+          <option value="dikey-jaluzi">Dikey Jaluzi</option>
+          <option value="genel">Genel Bilgi</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Mesajınız</label>
+        <textarea id="message" name="message" rows="4" placeholder="Kaç pencere için, ne zaman randevu istersiniz vb."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        WhatsApp'tan Gönder
+      </button>
+
+      <p class="form-note">
+        Form gönderildiğinde WhatsApp üzerinden bize ulaşacaksınız. Bilgileriniz üçüncü taraflarla paylaşılmaz.
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- HARİTA -->
+<section class="map-section">
+  <div class="map-header reveal">
+    <p class="section-eyebrow">Atölyemiz & Showroom</p>
+    <h2 class="section-title">Bizi <em>Ziyaret Edin</em></h2>
+    <p class="section-desc">Kumaşları yerinde görmek, örnekleri incelemek veya sadece tanışmak için uğrayın.</p>
+  </div>
+
+  <div class="map-frame reveal">
+    <iframe
+      src="https://www.google.com/maps?q=Orhangazi+Mah.+Eşref+Bitlis+Blv.+No:86+Sultanbeyli+İstanbul&output=embed"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Yelken Perde Konum">
+    </iframe>
+  </div>
+
+  <div class="map-actions">
+    <a href="https://www.google.com/maps/search/?api=1&query=Orhangazi+Eşref+Bitlis+Bulvarı+86+Sultanbeyli" class="btn-secondary" target="_blank">
+      Google Maps'te Aç
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+    </a>
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Orhangazi+Mah.+Eşref+Bitlis+Blv.+No:86+Sultanbeyli+İstanbul" class="btn-secondary" target="_blank">
+      Yol Tarifi Al
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- SAAT TABLOSU -->
+<section class="hours-section">
+  <div class="hours-grid">
+    <div class="reveal">
+      <p class="section-eyebrow">Çalışma Saatlerimiz</p>
+      <h2 class="section-title">Haftanın<br><em>6 Günü Buradayız</em></h2>
+      <p class="section-desc">Dükkânımız Pazartesi'den Cumartesi'ye kadar açık. Randevu alırsanız sizi özel olarak bekleyebilir ve uygulamaya odaklanabiliriz.</p>
+    </div>
+    <div class="reveal">
+      <div class="hours-list">
+        <div class="hours-item">
+          <span class="hours-day">Pazartesi</span>
+          <span class="hours-time">09:00 — 21:00</span>
+        </div>
+        <div class="hours-item">
+          <span class="hours-day">Salı</span>
+          <span class="hours-time">09:00 — 21:00</span>
+        </div>
+        <div class="hours-item">
+          <span class="hours-day">Çarşamba</span>
+          <span class="hours-time">09:00 — 21:00</span>
+        </div>
+        <div class="hours-item">
+          <span class="hours-day">Perşembe</span>
+          <span class="hours-time">09:00 — 21:00</span>
+        </div>
+        <div class="hours-item">
+          <span class="hours-day">Cuma</span>
+          <span class="hours-time">09:00 — 21:00</span>
+        </div>
+        <div class="hours-item">
+          <span class="hours-day">Cumartesi</span>
+          <span class="hours-time">09:00 — 21:00</span>
+        </div>
+        <div class="hours-item closed">
+          <span class="hours-day">Pazar</span>
+          <span class="hours-time">Kapalı</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">Yelken <span>Perde</span></div>
+      <p class="footer-brand-desc">2010'dan bu yana Sultanbeyli'deki atölyemizde ürettiğimiz perde ve jaluzilerle İstanbul'un pencerelerine değer katıyoruz.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/yelken.perde" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://wa.me/905423313413" target="_blank" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Sayfalar</h4>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="urunler.html">Ürünler</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Ürünler</h4>
+      <ul>
+        <li><a href="urunler.html#ahsap-jaluzi">Ahşap Jaluzi</a></li>
+        <li><a href="urunler.html#zebra-perde">Zebra Perde</a></li>
+        <li><a href="urunler.html#stor-perde">Stor Perde</a></li>
+        <li><a href="urunler.html#tul-perde">Tül Perde</a></li>
+        <li><a href="urunler.html#fon-perde">Fon Perde</a></li>
+        <li><a href="urunler.html#dikey-jaluzi">Dikey Jaluzi</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>İletişim</h4>
+      <div class="footer-contact">
+        <strong>Telefon</strong>
+        <a href="tel:+905423313413">0542 331 34 13</a><br><br>
+        <strong>E-posta</strong>
+        <a href="mailto:info@yelkenperde.com">info@yelkenperde.com</a><br><br>
+        <strong>Adres</strong>
+        Orhangazi Mah. Eşref Bitlis Blv. No:86<br>
+        Sultanbeyli / İstanbul
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Yelken Perde. Tüm hakları saklıdır.</p>
+    <div class="footer-legal">
+      <a href="#">Gizlilik Politikası</a>
+      <a href="#">KVKK</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/905423313413?text=Merhaba,%20bilgi%20almak%20istiyorum." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+<script src="main.js"></script>
+</body>
+</html>

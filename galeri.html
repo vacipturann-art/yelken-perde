@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proje Galerimiz — Yelken Perde | Referans Uygulamalar</title>
+<meta name="description" content="Yelken Perde'nin İstanbul genelinde tamamladığı perde ve jaluzi projelerinin galerisi. Modern ve klasik uygulamalardan kareler.">
+<link rel="canonical" href="https://yelkenperde.com/galeri.html">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* GALERİ */
+  .gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 40px 24px;
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--linen);
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--linen);
+    color: var(--stone);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--charcoal);
+    color: var(--charcoal);
+  }
+
+  .filter-btn.active {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: white;
+  }
+
+  .gallery-full {
+    padding: 60px 80px 100px;
+    background: var(--cream);
+  }
+
+  .gallery-full-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .gallery-item {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--linen);
+    cursor: pointer;
+    position: relative;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .gallery-item.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .gallery-item:hover img { transform: scale(1.05); }
+
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 60%, rgba(30,26,23,0.85));
+    display: flex;
+    align-items: flex-end;
+    padding: 20px 24px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+  .gallery-item-info {
+    color: white;
+  }
+
+  .gallery-item-category {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+
+  .gallery-item-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.3;
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,12,10,0.96);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+  }
+
+  .lightbox.active { display: flex; }
+
+  .lightbox-content {
+    max-width: 100%;
+    max-height: 90vh;
+    text-align: center;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .lightbox-caption {
+    margin-top: 20px;
+    color: var(--sand);
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .lightbox-close,
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-close { top: 24px; right: 24px; }
+  .lightbox-prev { left: 24px; top: 50%; transform: translateY(-50%); }
+  .lightbox-next { right: 24px; top: 50%; transform: translateY(-50%); }
+
+  .lightbox-close:hover,
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .gallery-stats {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--linen);
+  }
+
+  .gallery-stats p {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--stone);
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .gallery-full { padding: 40px 24px 64px; }
+    .gallery-full-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .gallery-filters { padding: 24px 16px; }
+    .filter-btn { font-size: 10px; padding: 8px 14px; }
+    .lightbox-close, .lightbox-prev, .lightbox-next { width: 40px; height: 40px; font-size: 22px; }
+    .lightbox-close { top: 16px; right: 16px; }
+    .lightbox-prev { left: 10px; }
+    .lightbox-next { right: 10px; }
+  }
+
+  @media (max-width: 500px) {
+    .gallery-full-grid { grid-template-columns: 1fr; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo-nav.png" alt="Yelken Perde">
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="urunler.html">Ürünler</a></li>
+    <li><a href="galeri.html" class="active">Galeri</a></li>
+    <li><a href="hakkimizda.html">Hakkımızda</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="iletisim.html">İletişim</a></li>
+    <li><a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="nav-cta" target="_blank">Randevu Al</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" onclick="toggleMenu()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Ana Sayfa</a>
+    <span>/</span>
+    <span>Galeri</span>
+  </div>
+  <p class="section-eyebrow">Referans Projelerimiz</p>
+  <h1 class="section-title">İstanbul'un <em>Evlerinden</em><br>İlham Veren Kareler</h1>
+  <p class="section-desc">
+    Yıllar içinde tamamladığımız yüzlerce projeden bir seçki. Her biri mekânın karakterini yansıtan, özgün bir hikayeye sahip.
+  </p>
+</header>
+
+<!-- FILTRE -->
+<div class="gallery-filters">
+  <button class="filter-btn active" data-filter="all">Tümü</button>
+  <button class="filter-btn" data-filter="fon">Fon Perde</button>
+  <button class="filter-btn" data-filter="tul">Tül</button>
+  <button class="filter-btn" data-filter="stor">Stor</button>
+  <button class="filter-btn" data-filter="zebra">Zebra</button>
+  <button class="filter-btn" data-filter="jaluzi">Jaluzi</button>
+  <button class="filter-btn" data-filter="klasik">Klasik</button>
+  <button class="filter-btn" data-filter="modern">Modern</button>
+</div>
+
+<!-- GALERİ -->
+<section class="gallery-full">
+  <div class="gallery-full-grid">
+
+    <div class="gallery-item" data-category="modern fon tul" data-lightbox="images/projects/modern-krem-bej-tul-fon.jpg" data-caption="Modern salon — krem fon + beyaz tül kombinasyonu">
+      <img src="images/projects/modern-krem-bej-tul-fon.jpg" alt="Modern krem bej tül fon perde" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern · Fon + Tül</div>
+          <div class="gallery-item-title">Modern Salon Uygulaması</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon tul" data-lightbox="images/projects/siyah-gri-modern-fon-tul.jpg" data-caption="Siyah fon ve beyaz tül — modern lüks">
+      <img src="images/projects/siyah-gri-modern-fon-tul.jpg" alt="Siyah gri modern fon tül" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern · Premium</div>
+          <div class="gallery-item-title">Siyah Fon, Beyaz Tül</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon lux" data-lightbox="images/projects/altin-bronz-klasik-salon.jpg" data-caption="Altın bronz klasik salon uygulaması">
+      <img src="images/projects/altin-bronz-klasik-salon.jpg" alt="Altın bronz klasik salon" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Lüks</div>
+          <div class="gallery-item-title">Altın Bronz Salon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon" data-lightbox="images/projects/modern-salon-krem-bej.jpg" data-caption="Krem ve bej tonlarında modern salon">
+      <img src="images/projects/modern-salon-krem-bej.jpg" alt="Modern salon krem bej" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern</div>
+          <div class="gallery-item-title">Krem Bej Salon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="jaluzi modern" data-lightbox="images/projects/ahsap-jaluzi-manzaral-kahve.jpg" data-caption="Manzaralı oda — ahşap jaluzi">
+      <img src="images/projects/ahsap-jaluzi-manzaral-kahve.jpg" alt="Ahşap jaluzi manzaralı kahve" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Ahşap Jaluzi</div>
+          <div class="gallery-item-title">Manzaralı Oda</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon lux" data-lightbox="images/projects/siyah-altin-modern-premium.jpg" data-caption="Siyah ve altın — premium lüks">
+      <img src="images/projects/siyah-altin-modern-premium.jpg" alt="Siyah altın modern premium" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Premium · Lüks</div>
+          <div class="gallery-item-title">Siyah-Altın Prestij</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon lux" data-lightbox="images/projects/gumus-lux-drapeli-salon.jpg" data-caption="Gümüş tonlarında drapeli lüks salon">
+      <img src="images/projects/gumus-lux-drapeli-salon.jpg" alt="Gümüş lüks drapeli salon" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Drapeli</div>
+          <div class="gallery-item-title">Gümüş Lüks Salon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon tul" data-lightbox="images/projects/modern-yemek-odasi-krem.jpg" data-caption="Modern yemek odası — krem fon ve tül">
+      <img src="images/projects/modern-yemek-odasi-krem.jpg" alt="Modern yemek odası krem" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern · Yemek Odası</div>
+          <div class="gallery-item-title">Minimalist Bej</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon lux" data-lightbox="images/projects/mavi-altin-lux-drapeli-perde.jpg" data-caption="Mavi altın lüks drapeli perde">
+      <img src="images/projects/mavi-altin-lux-drapeli-perde.jpg" alt="Mavi altın lüks drapeli" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Lüks</div>
+          <div class="gallery-item-title">Mavi-Altın Saray Tarzı</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/altin-drapeli-yatak-odasi.jpg" data-caption="Altın drapeli yatak odası">
+      <img src="images/projects/altin-drapeli-yatak-odasi.jpg" alt="Altın drapeli yatak odası" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Yatak Odası</div>
+          <div class="gallery-item-title">Altın Drapeli</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/lacivert-altin-klasik-lux.jpg" data-caption="Lacivert ve altın klasik lüks perde">
+      <img src="images/projects/lacivert-altin-klasik-lux.jpg" alt="Lacivert altın klasik" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Lüks</div>
+          <div class="gallery-item-title">Lacivert-Altın Klasik</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon" data-lightbox="images/projects/mavi-sade-yatak-odasi.jpg" data-caption="Mavi tonlarında sade yatak odası">
+      <img src="images/projects/mavi-sade-yatak-odasi.jpg" alt="Mavi sade yatak odası" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern</div>
+          <div class="gallery-item-title">Mavi Sade Yatak Odası</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="tul mutfak" data-lightbox="images/projects/mutfak-tul-perde-beyaz.jpg" data-caption="Mutfak tül perde uygulaması">
+      <img src="images/projects/mutfak-tul-perde-beyaz.jpg" alt="Mutfak tül perde beyaz" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Mutfak · Tül</div>
+          <div class="gallery-item-title">Beyaz Mutfak Tülü</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern tul" data-lightbox="images/projects/gri-siyah-yatak-odasi-tul.jpg" data-caption="Gri ve siyah modern yatak odası">
+      <img src="images/projects/gri-siyah-yatak-odasi-tul.jpg" alt="Gri siyah yatak odası tül" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern · Yatak Odası</div>
+          <div class="gallery-item-title">Gri-Siyah Tül</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="stor" data-lightbox="images/projects/beyaz-desenli-stor-balkon.jpg" data-caption="Beyaz desenli stor — balkon">
+      <img src="images/projects/beyaz-desenli-stor-balkon.jpg" alt="Beyaz desenli stor balkon" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Stor Perde</div>
+          <div class="gallery-item-title">Desenli Beyaz Stor</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="tul modern" data-lightbox="images/projects/beyaz-tul-tek-tarafli.jpg" data-caption="Beyaz tek taraflı tül uygulaması">
+      <img src="images/projects/beyaz-tul-tek-tarafli.jpg" alt="Beyaz tül tek taraflı" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Tül · Modern</div>
+          <div class="gallery-item-title">Tek Taraflı Tül</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon lux" data-lightbox="images/projects/altin-lux-salon-klasik.jpg" data-caption="Altın lüks klasik salon">
+      <img src="images/projects/altin-lux-salon-klasik.jpg" alt="Altın lüks salon klasik" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Lüks</div>
+          <div class="gallery-item-title">Altın Taçlı Salon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/altin-drapeli-modern-klasik.jpg" data-caption="Altın drapeli modern klasik">
+      <img src="images/projects/altin-drapeli-modern-klasik.jpg" alt="Altın drapeli modern klasik" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Modern</div>
+          <div class="gallery-item-title">Altın Drapeli Uyum</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/kahverengi-ahsap-jalusi-fon.jpg" data-caption="Kahverengi fon + ahşap jaluzi kombin">
+      <img src="images/projects/kahverengi-ahsap-jalusi-fon.jpg" alt="Kahverengi ahşap jaluzi fon" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Kombin · Klasik</div>
+          <div class="gallery-item-title">Kahve Fon + Jaluzi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/klasik-saten-perde-altin-kahve.jpg" data-caption="Klasik saten perde — altın ve kahve">
+      <img src="images/projects/klasik-saten-perde-altin-kahve.jpg" alt="Klasik saten perde altın kahve" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Saten</div>
+          <div class="gallery-item-title">Altın Saten Perde</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/modern-fon-perde-krem-tul.jpg" data-caption="Krem fon + şık tül ince kordlu">
+      <img src="images/projects/modern-fon-perde-krem-tul.jpg" alt="Modern fon krem tül" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern</div>
+          <div class="gallery-item-title">İnce Kordlu Krem</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/klasik-drapeli-fon-perde-kahve.jpg" data-caption="Klasik drapeli fon perde kahve tonları">
+      <img src="images/projects/klasik-drapeli-fon-perde-kahve.jpg" alt="Klasik drapeli fon kahve" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Drapeli</div>
+          <div class="gallery-item-title">Kahve Drapeli Klasik</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/klasik-gri-desenli-fon-perde.jpg" data-caption="Klasik gri desenli fon perde">
+      <img src="images/projects/klasik-gri-desenli-fon-perde.jpg" alt="Klasik gri desenli fon" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik</div>
+          <div class="gallery-item-title">Gri Desenli Klasik</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon lux" data-lightbox="images/projects/lux-gri-altin-desenli-perde.jpg" data-caption="Lüks gri altın desenli perde">
+      <img src="images/projects/lux-gri-altin-desenli-perde.jpg" alt="Lüks gri altın desenli" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Lüks</div>
+          <div class="gallery-item-title">Gri-Altın Desenli</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/kahverengi-klasik-tul-perde.jpg" data-caption="Kahverengi klasik fon + tül kombinasyon">
+      <img src="images/projects/kahverengi-klasik-tul-perde.jpg" alt="Kahverengi klasik tül" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Kombin</div>
+          <div class="gallery-item-title">Kahve Klasik Tül</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/gumus-gri-geleneksel-perde.jpg" data-caption="Gümüş gri geleneksel perde">
+      <img src="images/projects/gumus-gri-geleneksel-perde.jpg" alt="Gümüş gri geleneksel" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Geleneksel</div>
+          <div class="gallery-item-title">Gümüş Geleneksel</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon tul" data-lightbox="images/projects/genis-salon-krem-beyaz-perde.jpg" data-caption="Geniş salon krem-beyaz uygulama">
+      <img src="images/projects/genis-salon-krem-beyaz-perde.jpg" alt="Geniş salon krem beyaz" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern · Salon</div>
+          <div class="gallery-item-title">Geniş Salon Krem Beyaz</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern zebra" data-lightbox="images/projects/modern-salon-zebra-krem-perde.jpg" data-caption="Modern salon — zebra perde ve krem fon">
+      <img src="images/projects/modern-salon-zebra-krem-perde.jpg" alt="Modern zebra krem perde" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern · Zebra</div>
+          <div class="gallery-item-title">Zebra + Krem Kombin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/mavi-krem-drapeli-fon-perde.jpg" data-caption="Mavi-krem drapeli fon">
+      <img src="images/projects/mavi-krem-drapeli-fon-perde.jpg" alt="Mavi krem drapeli fon" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Drapeli</div>
+          <div class="gallery-item-title">Mavi-Krem Drapeli</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon lux" data-lightbox="images/projects/siyah-altin-desenli-lux-perde.jpg" data-caption="Siyah altın desenli lüks perde">
+      <img src="images/projects/siyah-altin-desenli-lux-perde.jpg" alt="Siyah altın desenli lüks" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Lüks · Oryantal</div>
+          <div class="gallery-item-title">Siyah-Altın Oryantal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/kahve-klasik-dantel-tul.jpg" data-caption="Kahve klasik dantel tül">
+      <img src="images/projects/kahve-klasik-dantel-tul.jpg" alt="Kahve klasik dantel tül" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Klasik · Dantelli</div>
+          <div class="gallery-item-title">Kahve Dantel Tül</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="stor tul" data-lightbox="images/projects/beyaz-isik-tul-stor.jpg" data-caption="Beyaz ışık yansımalı tül-stor">
+      <img src="images/projects/beyaz-isik-tul-stor.jpg" alt="Beyaz ışık tül stor" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Stor · Tül</div>
+          <div class="gallery-item-title">Beyaz Işık Tülü</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="stor" data-lightbox="images/projects/beyaz-desenli-stor-perde.jpg" data-caption="Beyaz desenli stor perde">
+      <img src="images/projects/beyaz-desenli-stor-perde.jpg" alt="Beyaz desenli stor" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Stor Perde</div>
+          <div class="gallery-item-title">Beyaz Dalgalı Stor</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern tul" data-lightbox="images/projects/modern-krem-beyaz-tul.jpg" data-caption="Modern krem beyaz tül">
+      <img src="images/projects/modern-krem-beyaz-tul.jpg" alt="Modern krem beyaz tül" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern · Tül</div>
+          <div class="gallery-item-title">Modern Stor-Tül</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon" data-lightbox="images/projects/yesil-turkuaz-salon-perde.jpg" data-caption="Yeşil turkuaz salon perdesi">
+      <img src="images/projects/yesil-turkuaz-salon-perde.jpg" alt="Yeşil turkuaz salon" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern</div>
+          <div class="gallery-item-title">Turkuaz Temalı Salon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="klasik fon" data-lightbox="images/projects/showroom-drapeli-klasik.jpg" data-caption="Showroom drapeli klasik örnek">
+      <img src="images/projects/showroom-drapeli-klasik.jpg" alt="Showroom drapeli klasik" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Showroom</div>
+          <div class="gallery-item-title">Drapeli Klasik Örneği</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon tul" data-lightbox="images/projects/modern-salon-turkuaz-kahve.jpg" data-caption="Modern turkuaz-kahve salon">
+      <img src="images/projects/modern-salon-turkuaz-kahve.jpg" alt="Modern turkuaz kahve" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Modern</div>
+          <div class="gallery-item-title">Turkuaz-Kahve Uyum</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="modern fon tul" data-lightbox="images/projects/yemek-odasi-kahve-beyaz-tul.jpg" data-caption="Yemek odası kahve-beyaz tül">
+      <img src="images/projects/yemek-odasi-kahve-beyaz-tul.jpg" alt="Yemek odası kahve beyaz" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-info">
+          <div class="gallery-item-category">Yemek Odası</div>
+          <div class="gallery-item-title">Kahve-Beyaz Yemek Odası</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="gallery-stats">
+    <p>"500+ projemizden sadece bir kısmı."</p>
+    <a href="https://instagram.com/yelken.perde" target="_blank" class="btn-secondary" style="margin-top: 20px">
+      Instagram'da Daha Fazlası
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">Yelken <span>Perde</span></div>
+      <p class="footer-brand-desc">2010'dan bu yana Sultanbeyli'deki atölyemizde ürettiğimiz perde ve jaluzilerle İstanbul'un pencerelerine değer katıyoruz.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/yelken.perde" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://wa.me/905423313413" target="_blank" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Sayfalar</h4>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="urunler.html">Ürünler</a></li>
+        <li><a href="galeri.html">Galeri</a></li>
+        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Ürünler</h4>
+      <ul>
+        <li><a href="urunler.html#ahsap-jaluzi">Ahşap Jaluzi</a></li>
+        <li><a href="urunler.html#zebra-perde">Zebra Perde</a></li>
+        <li><a href="urunler.html#stor-perde">Stor Perde</a></li>
+        <li><a href="urunler.html#tul-perde">Tül Perde</a></li>
+        <li><a href="urunler.html#fon-perde">Fon Perde</a></li>
+        <li><a href="urunler.html#dikey-jaluzi">Dikey Jaluzi</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>İletişim</h4>
+      <div class="footer-contact">
+        <strong>Telefon</strong>
+        <a href="tel:+905423313413">0542 331 34 13</a><br><br>
+        <strong>E-posta</strong>
+        <a href="mailto:info@yelkenperde.com">info@yelkenperde.com</a><br><br>
+        <strong>Adres</strong>
+        Orhangazi Mah. Eşref Bitlis Blv. No:86<br>
+        Sultanbeyli / İstanbul
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 Yelken Perde. Tüm hakları saklıdır.</p>
+    <div class="footer-legal">
+      <a href="#">Gizlilik Politikası</a>
+      <a href="#">KVKK</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/905423313413?text=Merhaba,%20bilgi%20almak%20istiyorum." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+<script src="main.js"></script>
+</body>
+</html>
