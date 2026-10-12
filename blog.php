@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/inc/lib.php'; $posts = yp_posts(); ?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -162,18 +163,22 @@
 <!-- BLOG LİSTESİ -->
 <section class="blog-list">
   <div class="blog-grid">
+<?php foreach ($posts as $post): ?>
 
-    <a href="blog/jaluzi-mi-zebra-perde-mi.html" class="blog-card reveal">
+    <a href="blog/<?= e($post['slug']) ?>.html" class="blog-card reveal">
       <div class="blog-card-image">
-        <img src="images/projects/ahsap-jaluzi-manzaral-kahve.jpg" alt="Jaluzi mi zebra perde mi" loading="lazy">
+<?php if (!empty($post['cover'])): ?>
+        <img src="<?= e($post['cover']) ?>" alt="<?= e($post['title']) ?>" loading="lazy">
+<?php endif; ?>
       </div>
       <div class="blog-card-body">
         <div class="blog-card-meta">
-          Karar Rehberi <span>·</span> 5 dk okuma
+          <?php if (!empty($post['category'])): ?><?= e($post['category']) ?> <span>·</span> <?php endif; ?><?= yp_read_time($post) ?> dk okuma
         </div>
-        <h2 class="blog-card-title">Jaluzi mi, Zebra Perde mi? Evinize Hangisi Daha Uygun?</h2>
+        <h2 class="blog-card-title"><?= e($post['title']) ?></h2>
         <p class="blog-card-excerpt">
-          Ahşap jaluzi ile zebra perde arasında kalmış olabilirsiniz. Her ikisinin de avantajları ve farklı kullanım alanları var. Doğru kararı vermenize yardımcı olacak net bir karşılaştırma.
+          <?= e($post['excerpt'] ?? '') ?>
+
         </p>
         <span class="blog-card-readmore">
           Yazıyı Oku
@@ -181,44 +186,7 @@
         </span>
       </div>
     </a>
-
-    <a href="blog/perde-secerken-dikkat.html" class="blog-card reveal">
-      <div class="blog-card-image">
-        <img src="images/projects/modern-salon-krem-bej.jpg" alt="Perde seçerken dikkat" loading="lazy">
-      </div>
-      <div class="blog-card-body">
-        <div class="blog-card-meta">
-          Seçim Rehberi <span>·</span> 6 dk okuma
-        </div>
-        <h2 class="blog-card-title">Perde Seçerken Dikkat Edilmesi Gereken 7 Şey</h2>
-        <p class="blog-card-excerpt">
-          Odanızın büyüklüğünden duvar renginize, kumaş tipinden perde askı yüksekliğine kadar perde seçiminde sıkça atlanan ama sonucu belirleyen önemli ayrıntılar.
-        </p>
-        <span class="blog-card-readmore">
-          Yazıyı Oku
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </span>
-      </div>
-    </a>
-
-    <a href="blog/ahsap-jaluzi-bakimi.html" class="blog-card reveal">
-      <div class="blog-card-image">
-        <img src="images/projects/kahverengi-ahsap-jalusi-fon.jpg" alt="Ahşap jaluzi bakımı" loading="lazy">
-      </div>
-      <div class="blog-card-body">
-        <div class="blog-card-meta">
-          Bakım Rehberi <span>·</span> 4 dk okuma
-        </div>
-        <h2 class="blog-card-title">Ahşap Jaluzi Bakımı: Yıllarca İlk Günkü Gibi Kalması İçin</h2>
-        <p class="blog-card-excerpt">
-          Ahşap jaluzi yıllar geçtikçe güzelleşen bir ürün — doğru bakım yapıldığında. Temizliğin nasıl yapılması gerektiği, nemden nasıl korunacağı ve en sık yapılan hataların listesi.
-        </p>
-        <span class="blog-card-readmore">
-          Yazıyı Oku
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </span>
-      </div>
-    </a>
+<?php endforeach; ?>
 
   </div>
 </section>

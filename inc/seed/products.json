@@ -1,0 +1,8 @@
+{
+  "ahsap-jaluzi": { "image": "images/products/ahsap-jaluzi.jpg", "alt": "Ahşap jaluzi uygulaması" },
+  "zebra-perde": { "image": "images/products/zebra-perde.jpg", "alt": "Zebra perde uygulaması" },
+  "stor-perde": { "image": "images/products/stor-perde.jpg", "alt": "Stor perde uygulaması" },
+  "tul-perde": { "image": "images/products/tul-perde.jpg", "alt": "Tül perde uygulaması" },
+  "fon-perde": { "image": "images/products/fon-perde-lux.jpg", "alt": "Fon perde uygulaması" },
+  "dikey-jaluzi": { "image": "images/products/fon-perde-modern.jpg", "alt": "Dikey jaluzi uygulaması" }
+}

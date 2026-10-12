@@ -1,0 +1,583 @@
+[
+    {
+        "id": "g001",
+        "type": "image",
+        "src": "images/projects/modern-krem-bej-tul-fon.jpg",
+        "thumb": "images/projects/modern-krem-bej-tul-fon.jpg",
+        "title": "Modern Salon Uygulaması",
+        "label": "Modern · Fon + Tül",
+        "caption": "Modern salon — krem fon + beyaz tül kombinasyonu",
+        "alt": "Modern krem bej tül fon perde",
+        "categories": [
+            "modern",
+            "fon",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g002",
+        "type": "image",
+        "src": "images/projects/siyah-gri-modern-fon-tul.jpg",
+        "thumb": "images/projects/siyah-gri-modern-fon-tul.jpg",
+        "title": "Siyah Fon, Beyaz Tül",
+        "label": "Modern · Premium",
+        "caption": "Siyah fon ve beyaz tül — modern lüks",
+        "alt": "Siyah gri modern fon tül",
+        "categories": [
+            "modern",
+            "fon",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g003",
+        "type": "image",
+        "src": "images/projects/altin-bronz-klasik-salon.jpg",
+        "thumb": "images/projects/altin-bronz-klasik-salon.jpg",
+        "title": "Altın Bronz Salon",
+        "label": "Klasik · Lüks",
+        "caption": "Altın bronz klasik salon uygulaması",
+        "alt": "Altın bronz klasik salon",
+        "categories": [
+            "klasik",
+            "fon",
+            "lux"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g004",
+        "type": "image",
+        "src": "images/projects/modern-salon-krem-bej.jpg",
+        "thumb": "images/projects/modern-salon-krem-bej.jpg",
+        "title": "Krem Bej Salon",
+        "label": "Modern",
+        "caption": "Krem ve bej tonlarında modern salon",
+        "alt": "Modern salon krem bej",
+        "categories": [
+            "modern",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g005",
+        "type": "image",
+        "src": "images/projects/ahsap-jaluzi-manzaral-kahve.jpg",
+        "thumb": "images/projects/ahsap-jaluzi-manzaral-kahve.jpg",
+        "title": "Manzaralı Oda",
+        "label": "Ahşap Jaluzi",
+        "caption": "Manzaralı oda — ahşap jaluzi",
+        "alt": "Ahşap jaluzi manzaralı kahve",
+        "categories": [
+            "jaluzi",
+            "modern"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g006",
+        "type": "image",
+        "src": "images/projects/siyah-altin-modern-premium.jpg",
+        "thumb": "images/projects/siyah-altin-modern-premium.jpg",
+        "title": "Siyah-Altın Prestij",
+        "label": "Premium · Lüks",
+        "caption": "Siyah ve altın — premium lüks",
+        "alt": "Siyah altın modern premium",
+        "categories": [
+            "klasik",
+            "fon",
+            "lux"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g007",
+        "type": "image",
+        "src": "images/projects/gumus-lux-drapeli-salon.jpg",
+        "thumb": "images/projects/gumus-lux-drapeli-salon.jpg",
+        "title": "Gümüş Lüks Salon",
+        "label": "Klasik · Drapeli",
+        "caption": "Gümüş tonlarında drapeli lüks salon",
+        "alt": "Gümüş lüks drapeli salon",
+        "categories": [
+            "klasik",
+            "fon",
+            "lux"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g008",
+        "type": "image",
+        "src": "images/projects/modern-yemek-odasi-krem.jpg",
+        "thumb": "images/projects/modern-yemek-odasi-krem.jpg",
+        "title": "Minimalist Bej",
+        "label": "Modern · Yemek Odası",
+        "caption": "Modern yemek odası — krem fon ve tül",
+        "alt": "Modern yemek odası krem",
+        "categories": [
+            "modern",
+            "fon",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g009",
+        "type": "image",
+        "src": "images/projects/mavi-altin-lux-drapeli-perde.jpg",
+        "thumb": "images/projects/mavi-altin-lux-drapeli-perde.jpg",
+        "title": "Mavi-Altın Saray Tarzı",
+        "label": "Klasik · Lüks",
+        "caption": "Mavi altın lüks drapeli perde",
+        "alt": "Mavi altın lüks drapeli",
+        "categories": [
+            "klasik",
+            "fon",
+            "lux"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g010",
+        "type": "image",
+        "src": "images/projects/altin-drapeli-yatak-odasi.jpg",
+        "thumb": "images/projects/altin-drapeli-yatak-odasi.jpg",
+        "title": "Altın Drapeli",
+        "label": "Yatak Odası",
+        "caption": "Altın drapeli yatak odası",
+        "alt": "Altın drapeli yatak odası",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g011",
+        "type": "image",
+        "src": "images/projects/lacivert-altin-klasik-lux.jpg",
+        "thumb": "images/projects/lacivert-altin-klasik-lux.jpg",
+        "title": "Lacivert-Altın Klasik",
+        "label": "Klasik · Lüks",
+        "caption": "Lacivert ve altın klasik lüks perde",
+        "alt": "Lacivert altın klasik",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g012",
+        "type": "image",
+        "src": "images/projects/mavi-sade-yatak-odasi.jpg",
+        "thumb": "images/projects/mavi-sade-yatak-odasi.jpg",
+        "title": "Mavi Sade Yatak Odası",
+        "label": "Modern",
+        "caption": "Mavi tonlarında sade yatak odası",
+        "alt": "Mavi sade yatak odası",
+        "categories": [
+            "modern",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g013",
+        "type": "image",
+        "src": "images/projects/mutfak-tul-perde-beyaz.jpg",
+        "thumb": "images/projects/mutfak-tul-perde-beyaz.jpg",
+        "title": "Beyaz Mutfak Tülü",
+        "label": "Mutfak · Tül",
+        "caption": "Mutfak tül perde uygulaması",
+        "alt": "Mutfak tül perde beyaz",
+        "categories": [
+            "tul",
+            "mutfak"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g014",
+        "type": "image",
+        "src": "images/projects/gri-siyah-yatak-odasi-tul.jpg",
+        "thumb": "images/projects/gri-siyah-yatak-odasi-tul.jpg",
+        "title": "Gri-Siyah Tül",
+        "label": "Modern · Yatak Odası",
+        "caption": "Gri ve siyah modern yatak odası",
+        "alt": "Gri siyah yatak odası tül",
+        "categories": [
+            "modern",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g015",
+        "type": "image",
+        "src": "images/projects/beyaz-desenli-stor-balkon.jpg",
+        "thumb": "images/projects/beyaz-desenli-stor-balkon.jpg",
+        "title": "Desenli Beyaz Stor",
+        "label": "Stor Perde",
+        "caption": "Beyaz desenli stor — balkon",
+        "alt": "Beyaz desenli stor balkon",
+        "categories": [
+            "stor"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g016",
+        "type": "image",
+        "src": "images/projects/beyaz-tul-tek-tarafli.jpg",
+        "thumb": "images/projects/beyaz-tul-tek-tarafli.jpg",
+        "title": "Tek Taraflı Tül",
+        "label": "Tül · Modern",
+        "caption": "Beyaz tek taraflı tül uygulaması",
+        "alt": "Beyaz tül tek taraflı",
+        "categories": [
+            "tul",
+            "modern"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g017",
+        "type": "image",
+        "src": "images/projects/altin-lux-salon-klasik.jpg",
+        "thumb": "images/projects/altin-lux-salon-klasik.jpg",
+        "title": "Altın Taçlı Salon",
+        "label": "Klasik · Lüks",
+        "caption": "Altın lüks klasik salon",
+        "alt": "Altın lüks salon klasik",
+        "categories": [
+            "klasik",
+            "fon",
+            "lux"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g018",
+        "type": "image",
+        "src": "images/projects/altin-drapeli-modern-klasik.jpg",
+        "thumb": "images/projects/altin-drapeli-modern-klasik.jpg",
+        "title": "Altın Drapeli Uyum",
+        "label": "Klasik · Modern",
+        "caption": "Altın drapeli modern klasik",
+        "alt": "Altın drapeli modern klasik",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g019",
+        "type": "image",
+        "src": "images/projects/kahverengi-ahsap-jalusi-fon.jpg",
+        "thumb": "images/projects/kahverengi-ahsap-jalusi-fon.jpg",
+        "title": "Kahve Fon + Jaluzi",
+        "label": "Kombin · Klasik",
+        "caption": "Kahverengi fon + ahşap jaluzi kombin",
+        "alt": "Kahverengi ahşap jaluzi fon",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g020",
+        "type": "image",
+        "src": "images/projects/klasik-saten-perde-altin-kahve.jpg",
+        "thumb": "images/projects/klasik-saten-perde-altin-kahve.jpg",
+        "title": "Altın Saten Perde",
+        "label": "Klasik · Saten",
+        "caption": "Klasik saten perde — altın ve kahve",
+        "alt": "Klasik saten perde altın kahve",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g021",
+        "type": "image",
+        "src": "images/projects/modern-fon-perde-krem-tul.jpg",
+        "thumb": "images/projects/modern-fon-perde-krem-tul.jpg",
+        "title": "İnce Kordlu Krem",
+        "label": "Modern",
+        "caption": "Krem fon + şık tül ince kordlu",
+        "alt": "Modern fon krem tül",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g022",
+        "type": "image",
+        "src": "images/projects/klasik-drapeli-fon-perde-kahve.jpg",
+        "thumb": "images/projects/klasik-drapeli-fon-perde-kahve.jpg",
+        "title": "Kahve Drapeli Klasik",
+        "label": "Klasik · Drapeli",
+        "caption": "Klasik drapeli fon perde kahve tonları",
+        "alt": "Klasik drapeli fon kahve",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g023",
+        "type": "image",
+        "src": "images/projects/klasik-gri-desenli-fon-perde.jpg",
+        "thumb": "images/projects/klasik-gri-desenli-fon-perde.jpg",
+        "title": "Gri Desenli Klasik",
+        "label": "Klasik",
+        "caption": "Klasik gri desenli fon perde",
+        "alt": "Klasik gri desenli fon",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g024",
+        "type": "image",
+        "src": "images/projects/lux-gri-altin-desenli-perde.jpg",
+        "thumb": "images/projects/lux-gri-altin-desenli-perde.jpg",
+        "title": "Gri-Altın Desenli",
+        "label": "Lüks",
+        "caption": "Lüks gri altın desenli perde",
+        "alt": "Lüks gri altın desenli",
+        "categories": [
+            "klasik",
+            "fon",
+            "lux"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g025",
+        "type": "image",
+        "src": "images/projects/kahverengi-klasik-tul-perde.jpg",
+        "thumb": "images/projects/kahverengi-klasik-tul-perde.jpg",
+        "title": "Kahve Klasik Tül",
+        "label": "Klasik · Kombin",
+        "caption": "Kahverengi klasik fon + tül kombinasyon",
+        "alt": "Kahverengi klasik tül",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g026",
+        "type": "image",
+        "src": "images/projects/gumus-gri-geleneksel-perde.jpg",
+        "thumb": "images/projects/gumus-gri-geleneksel-perde.jpg",
+        "title": "Gümüş Geleneksel",
+        "label": "Klasik · Geleneksel",
+        "caption": "Gümüş gri geleneksel perde",
+        "alt": "Gümüş gri geleneksel",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g027",
+        "type": "image",
+        "src": "images/projects/genis-salon-krem-beyaz-perde.jpg",
+        "thumb": "images/projects/genis-salon-krem-beyaz-perde.jpg",
+        "title": "Geniş Salon Krem Beyaz",
+        "label": "Modern · Salon",
+        "caption": "Geniş salon krem-beyaz uygulama",
+        "alt": "Geniş salon krem beyaz",
+        "categories": [
+            "modern",
+            "fon",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g028",
+        "type": "image",
+        "src": "images/projects/modern-salon-zebra-krem-perde.jpg",
+        "thumb": "images/projects/modern-salon-zebra-krem-perde.jpg",
+        "title": "Zebra + Krem Kombin",
+        "label": "Modern · Zebra",
+        "caption": "Modern salon — zebra perde ve krem fon",
+        "alt": "Modern zebra krem perde",
+        "categories": [
+            "modern",
+            "zebra"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g029",
+        "type": "image",
+        "src": "images/projects/mavi-krem-drapeli-fon-perde.jpg",
+        "thumb": "images/projects/mavi-krem-drapeli-fon-perde.jpg",
+        "title": "Mavi-Krem Drapeli",
+        "label": "Klasik · Drapeli",
+        "caption": "Mavi-krem drapeli fon",
+        "alt": "Mavi krem drapeli fon",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g030",
+        "type": "image",
+        "src": "images/projects/siyah-altin-desenli-lux-perde.jpg",
+        "thumb": "images/projects/siyah-altin-desenli-lux-perde.jpg",
+        "title": "Siyah-Altın Oryantal",
+        "label": "Lüks · Oryantal",
+        "caption": "Siyah altın desenli lüks perde",
+        "alt": "Siyah altın desenli lüks",
+        "categories": [
+            "klasik",
+            "fon",
+            "lux"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g031",
+        "type": "image",
+        "src": "images/projects/kahve-klasik-dantel-tul.jpg",
+        "thumb": "images/projects/kahve-klasik-dantel-tul.jpg",
+        "title": "Kahve Dantel Tül",
+        "label": "Klasik · Dantelli",
+        "caption": "Kahve klasik dantel tül",
+        "alt": "Kahve klasik dantel tül",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g032",
+        "type": "image",
+        "src": "images/projects/beyaz-isik-tul-stor.jpg",
+        "thumb": "images/projects/beyaz-isik-tul-stor.jpg",
+        "title": "Beyaz Işık Tülü",
+        "label": "Stor · Tül",
+        "caption": "Beyaz ışık yansımalı tül-stor",
+        "alt": "Beyaz ışık tül stor",
+        "categories": [
+            "stor",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g033",
+        "type": "image",
+        "src": "images/projects/beyaz-desenli-stor-perde.jpg",
+        "thumb": "images/projects/beyaz-desenli-stor-perde.jpg",
+        "title": "Beyaz Dalgalı Stor",
+        "label": "Stor Perde",
+        "caption": "Beyaz desenli stor perde",
+        "alt": "Beyaz desenli stor",
+        "categories": [
+            "stor"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g034",
+        "type": "image",
+        "src": "images/projects/modern-krem-beyaz-tul.jpg",
+        "thumb": "images/projects/modern-krem-beyaz-tul.jpg",
+        "title": "Modern Stor-Tül",
+        "label": "Modern · Tül",
+        "caption": "Modern krem beyaz tül",
+        "alt": "Modern krem beyaz tül",
+        "categories": [
+            "modern",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g035",
+        "type": "image",
+        "src": "images/projects/yesil-turkuaz-salon-perde.jpg",
+        "thumb": "images/projects/yesil-turkuaz-salon-perde.jpg",
+        "title": "Turkuaz Temalı Salon",
+        "label": "Modern",
+        "caption": "Yeşil turkuaz salon perdesi",
+        "alt": "Yeşil turkuaz salon",
+        "categories": [
+            "modern",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g036",
+        "type": "image",
+        "src": "images/projects/showroom-drapeli-klasik.jpg",
+        "thumb": "images/projects/showroom-drapeli-klasik.jpg",
+        "title": "Drapeli Klasik Örneği",
+        "label": "Showroom",
+        "caption": "Showroom drapeli klasik örnek",
+        "alt": "Showroom drapeli klasik",
+        "categories": [
+            "klasik",
+            "fon"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g037",
+        "type": "image",
+        "src": "images/projects/modern-salon-turkuaz-kahve.jpg",
+        "thumb": "images/projects/modern-salon-turkuaz-kahve.jpg",
+        "title": "Turkuaz-Kahve Uyum",
+        "label": "Modern",
+        "caption": "Modern turkuaz-kahve salon",
+        "alt": "Modern turkuaz kahve",
+        "categories": [
+            "modern",
+            "fon",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    },
+    {
+        "id": "g038",
+        "type": "image",
+        "src": "images/projects/yemek-odasi-kahve-beyaz-tul.jpg",
+        "thumb": "images/projects/yemek-odasi-kahve-beyaz-tul.jpg",
+        "title": "Kahve-Beyaz Yemek Odası",
+        "label": "Yemek Odası",
+        "caption": "Yemek odası kahve-beyaz tül",
+        "alt": "Yemek odası kahve beyaz",
+        "categories": [
+            "modern",
+            "fon",
+            "tul"
+        ],
+        "created": "2026-01-01T00:00:00+03:00"
+    }
+]

@@ -54,10 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })();
 
-// Galeri lightbox (sadece gallery sayfasında çalışır)
+// Galeri lightbox — fotoğraf, video ve YouTube (galeri ve ana sayfa vitrini)
 (function() {
-  const items = document.querySelectorAll('[data-lightbox]');
-  if (!items.length) return;
+  if (!document.querySelector('[data-lightbox]')) return;
 
   const lightbox = document.createElement('div');
   lightbox.className = 'lightbox';
@@ -66,41 +65,68 @@ document.addEventListener('DOMContentLoaded', () => {
     <button class="lightbox-prev" aria-label="Önceki">&lsaquo;</button>
     <button class="lightbox-next" aria-label="Sonraki">&rsaquo;</button>
     <div class="lightbox-content">
-      <img src="" alt="">
+      <div class="lightbox-media"></div>
       <p class="lightbox-caption"></p>
     </div>
   `;
   document.body.appendChild(lightbox);
 
-  const img = lightbox.querySelector('img');
+  const mediaBox = lightbox.querySelector('.lightbox-media');
   const caption = lightbox.querySelector('.lightbox-caption');
+  let list = [];
   let currentIndex = 0;
-  const imageList = Array.from(items);
+
+  // Filtreyle gizlenen öğeler atlanır
+  const visibleItems = () => Array.from(document.querySelectorAll('[data-lightbox]'))
+    .filter(el => !el.classList.contains('hidden') && el.style.display !== 'none');
 
   const show = (index) => {
     currentIndex = index;
-    const el = imageList[index];
+    const el = list[index];
     const src = el.getAttribute('data-lightbox');
-    const cap = el.getAttribute('data-caption') || '';
-    img.src = src;
-    caption.textContent = cap;
+    const type = el.getAttribute('data-type') || 'image';
+    let media;
+
+    if (type === 'video') {
+      media = document.createElement('video');
+      media.src = src;
+      media.controls = true;
+      media.autoplay = true;
+      media.playsInline = true;
+    } else if (type === 'youtube') {
+      media = document.createElement('iframe');
+      media.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(src) + '?autoplay=1&rel=0';
+      media.allow = 'autoplay; encrypted-media; picture-in-picture';
+      media.allowFullscreen = true;
+    } else {
+      media = document.createElement('img');
+      media.src = src;
+      media.alt = el.querySelector('img') ? el.querySelector('img').alt : '';
+    }
+
+    mediaBox.replaceChildren(media);
+    caption.textContent = el.getAttribute('data-caption') || '';
+    lightbox.querySelector('.lightbox-prev').hidden = list.length < 2;
+    lightbox.querySelector('.lightbox-next').hidden = list.length < 2;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   };
 
   const hide = () => {
     lightbox.classList.remove('active');
+    mediaBox.replaceChildren();  // videoyu durdurur
     document.body.style.overflow = '';
   };
 
-  const next = () => show((currentIndex + 1) % imageList.length);
-  const prev = () => show((currentIndex - 1 + imageList.length) % imageList.length);
+  const next = () => show((currentIndex + 1) % list.length);
+  const prev = () => show((currentIndex - 1 + list.length) % list.length);
 
-  imageList.forEach((el, idx) => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      show(idx);
-    });
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-lightbox]');
+    if (!el) return;
+    e.preventDefault();
+    list = visibleItems();
+    show(Math.max(0, list.indexOf(el)));
   });
 
   lightbox.querySelector('.lightbox-close').addEventListener('click', hide);
@@ -123,26 +149,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterBtns = document.querySelectorAll('[data-filter]');
   if (!filterBtns.length) return;
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.getAttribute('data-filter');
+  const apply = (filter) => {
+    filterBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter') === filter));
 
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const items = document.querySelectorAll('[data-category]');
-      items.forEach(item => {
-        const cat = item.getAttribute('data-category');
-        if (filter === 'all' || cat === filter || (cat && cat.includes(filter))) {
-          item.style.display = '';
-          setTimeout(() => item.classList.remove('hidden'), 10);
-        } else {
-          item.classList.add('hidden');
-          setTimeout(() => { item.style.display = 'none'; }, 300);
-        }
-      });
+    document.querySelectorAll('[data-category]').forEach(item => {
+      const cats = (item.getAttribute('data-category') || '').split(' ');
+      if (filter === 'all' || cats.includes(filter)) {
+        item.style.display = '';
+        setTimeout(() => item.classList.remove('hidden'), 10);
+      } else {
+        item.classList.add('hidden');
+        setTimeout(() => { item.style.display = 'none'; }, 300);
+      }
     });
+  };
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => apply(btn.getAttribute('data-filter')));
   });
+
+  // Ürün sayfasındaki "Uygulamaları Gör" bağlantıları: galeri.html?cat=jaluzi
+  const cat = new URLSearchParams(location.search).get('cat');
+  if (cat && document.querySelector('[data-filter="' + CSS.escape(cat) + '"]')) apply(cat);
 })();
 
 // İletişim form (demo — gerçek entegrasyon için formspree/netlify forms vb. gerekir)

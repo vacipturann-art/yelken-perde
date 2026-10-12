@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/inc/lib.php'; ?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -257,7 +258,7 @@
     </div>
     <div class="product-visual-wrap reveal">
       <span class="product-badge">Popüler</span>
-      <img src="images/products/ahsap-jaluzi.jpg" alt="Ahşap jaluzi uygulaması">
+      <img src="<?= e(yp_product('ahsap-jaluzi')['image']) ?>" alt="<?= e(yp_product('ahsap-jaluzi')['alt']) ?>">
     </div>
   </div>
 </section>
@@ -266,7 +267,7 @@
 <section class="product-section" id="zebra-perde">
   <div class="product-row reverse">
     <div class="product-visual-wrap reveal">
-      <img src="images/products/zebra-perde.jpg" alt="Zebra perde uygulaması">
+      <img src="<?= e(yp_product('zebra-perde')['image']) ?>" alt="<?= e(yp_product('zebra-perde')['alt']) ?>">
     </div>
     <div class="product-content reveal">
       <p class="product-category-label">02 · Zebra Perde</p>
@@ -347,7 +348,7 @@
       </div>
     </div>
     <div class="product-visual-wrap reveal">
-      <img src="images/products/stor-perde.jpg" alt="Stor perde uygulaması">
+      <img src="<?= e(yp_product('stor-perde')['image']) ?>" alt="<?= e(yp_product('stor-perde')['alt']) ?>">
     </div>
   </div>
 </section>
@@ -356,7 +357,7 @@
 <section class="product-section" id="tul-perde">
   <div class="product-row reverse">
     <div class="product-visual-wrap reveal">
-      <img src="images/products/tul-perde.jpg" alt="Tül perde uygulaması">
+      <img src="<?= e(yp_product('tul-perde')['image']) ?>" alt="<?= e(yp_product('tul-perde')['alt']) ?>">
     </div>
     <div class="product-content reveal">
       <p class="product-category-label">04 · Tül Perde</p>
@@ -438,7 +439,7 @@
     </div>
     <div class="product-visual-wrap reveal">
       <span class="product-badge">Öne Çıkan</span>
-      <img src="images/products/fon-perde-lux.jpg" alt="Lüks fon perde uygulaması">
+      <img src="<?= e(yp_product('fon-perde')['image']) ?>" alt="<?= e(yp_product('fon-perde')['alt']) ?>">
     </div>
   </div>
 </section>
@@ -447,7 +448,7 @@
 <section class="product-section" id="dikey-jaluzi">
   <div class="product-row reverse">
     <div class="product-visual-wrap reveal">
-      <img src="images/products/fon-perde-modern.jpg" alt="Dikey jaluzi uygulaması">
+      <img src="<?= e(yp_product('dikey-jaluzi')['image']) ?>" alt="<?= e(yp_product('dikey-jaluzi')['alt']) ?>">
     </div>
     <div class="product-content reveal">
       <p class="product-category-label">06 · Dikey Jaluzi</p>

@@ -1,0 +1,26 @@
+# Yelken Perde — Apache / LiteSpeed (cPanel) ayarları
+DirectoryIndex index.php index.html
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Veri ve kod klasörlerine doğrudan erişim yok
+  RewriteRule ^(data|inc)(/|$) - [F,L]
+
+  # Eski .html adresleri aynen çalışmaya devam eder (içerik PHP ile üretilir)
+  RewriteRule ^(index|galeri|urunler|blog)\.html$ $1.php [L,QSA]
+
+  # Blog yazıları: blog/yazi-adi.html
+  RewriteRule ^blog/([a-z0-9-]+)\.html$ blog-yazi.php?slug=$1 [L,QSA]
+</IfModule>
+
+# Yüklenen medya için tarayıcı önbelleği
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType video/mp4 "access plus 30 days"
+  ExpiresByType video/webm "access plus 30 days"
+</IfModule>

@@ -1,0 +1,5 @@
+# Panelden üretilen içerik sunucuda kalır, depoya girmez
+/data/*
+!/data/.htaccess
+/uploads/*
+!/uploads/.htaccess

@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/inc/lib.php'; $showcase = yp_showcase_items(); ?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -917,7 +918,7 @@
 
   <div class="products-grid reveal">
     <a href="urunler.html#fon-perde" class="product-card large">
-      <img src="images/products/fon-perde-modern.jpg" alt="Modern Fon Perde" loading="lazy">
+      <img src="<?= e(yp_product('fon-perde')['image']) ?>" alt="<?= e(yp_product('fon-perde')['alt']) ?>" loading="lazy">
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Fon Perde</div>
@@ -926,7 +927,7 @@
     </a>
 
     <a href="urunler.html#ahsap-jaluzi" class="product-card">
-      <img src="images/products/ahsap-jaluzi.jpg" alt="Ahşap Jaluzi" loading="lazy">
+      <img src="<?= e(yp_product('ahsap-jaluzi')['image']) ?>" alt="<?= e(yp_product('ahsap-jaluzi')['alt']) ?>" loading="lazy">
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Ahşap Jaluzi</div>
@@ -935,7 +936,7 @@
     </a>
 
     <a href="urunler.html#zebra-perde" class="product-card">
-      <img src="images/products/zebra-perde.jpg" alt="Zebra Perde" loading="lazy">
+      <img src="<?= e(yp_product('zebra-perde')['image']) ?>" alt="<?= e(yp_product('zebra-perde')['alt']) ?>" loading="lazy">
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Zebra Perde</div>
@@ -944,7 +945,7 @@
     </a>
 
     <a href="urunler.html#stor-perde" class="product-card">
-      <img src="images/products/stor-perde.jpg" alt="Stor Perde" loading="lazy">
+      <img src="<?= e(yp_product('stor-perde')['image']) ?>" alt="<?= e(yp_product('stor-perde')['alt']) ?>" loading="lazy">
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Stor Perde</div>
@@ -953,7 +954,7 @@
     </a>
 
     <a href="urunler.html#tul-perde" class="product-card">
-      <img src="images/products/tul-perde.jpg" alt="Tül Perde" loading="lazy">
+      <img src="<?= e(yp_product('tul-perde')['image']) ?>" alt="<?= e(yp_product('tul-perde')['alt']) ?>" loading="lazy">
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Tül Perde</div>
@@ -1015,6 +1016,7 @@
 </section>
 
 <!-- ═══════ GALERİ PREVIEW ═══════ -->
+<?php if ($showcase): ?>
 <section id="projeler-preview">
   <div class="gallery-header reveal">
     <p class="section-eyebrow">Referans Projelerimiz</p>
@@ -1025,30 +1027,10 @@
   </div>
 
   <div class="gallery-grid-preview reveal">
-    <div class="gallery-item">
-      <img src="images/projects/siyah-gri-modern-fon-tul.jpg" alt="Siyah gri modern perde" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="images/projects/altin-bronz-klasik-salon.jpg" alt="Altın bronz klasik salon" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="images/projects/modern-salon-krem-bej.jpg" alt="Modern salon krem" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="images/projects/ahsap-jaluzi-manzaral-kahve.jpg" alt="Ahşap jaluzi manzaralı" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="images/projects/siyah-altin-modern-premium.jpg" alt="Siyah altın modern premium" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="images/projects/gumus-lux-drapeli-salon.jpg" alt="Gümüş lüks drapeli salon" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="images/projects/modern-yemek-odasi-krem.jpg" alt="Modern yemek odası krem" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="images/projects/mavi-altin-lux-drapeli-perde.jpg" alt="Mavi altın lüks" loading="lazy">
-    </div>
+<?php foreach ($showcase as $item): ?>
+    <?= yp_gallery_item_html($item, false) ?>
+
+<?php endforeach; ?>
   </div>
 
   <div class="gallery-cta reveal">
@@ -1058,6 +1040,7 @@
     </a>
   </div>
 </section>
+<?php endif; ?>
 
 <!-- ═══════ SÜREÇ ═══════ -->
 <section id="surec">
