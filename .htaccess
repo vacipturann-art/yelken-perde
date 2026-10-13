@@ -8,11 +8,22 @@ Options -Indexes
   # Veri ve kod klasörlerine doğrudan erişim yok
   RewriteRule ^(data|inc)(/|$) - [F,L]
 
-  # Eski .html adresleri aynen çalışmaya devam eder (içerik PHP ile üretilir)
-  RewriteRule ^(index|galeri|urunler|blog)\.html$ $1.php [L,QSA]
+  # Sitemap panelde eklenen blog yazılarıyla birlikte otomatik üretilir
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
-  # Blog yazıları: blog/yazi-adi.html
-  RewriteRule ^blog/([a-z0-9-]+)\.html$ blog-yazi.php?slug=$1 [L,QSA]
+  # Panelden yönetilen sayfalar (.html ve uzantısız eski adresler)
+  RewriteRule ^(index|galeri|urunler|blog)(\.html)?$ $1.php [L,QSA]
+  RewriteRule ^blog/$ blog.php [L,QSA]
+
+  # Blog yazıları: tasarımlı sabit sayfa (blog/yazi.html) varsa o açılır, yoksa panel yazısı
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html !-f
+  RewriteRule ^blog/([a-z0-9-]+)(\.html)?$ blog-yazi.php?slug=$1 [L,QSA]
+
+  # Uzantısız adresler: /hakkimizda -> hakkimizda.html, /blog/yazi -> blog/yazi.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
 </IfModule>
 
 # Yüklenen medya için tarayıcı önbelleği

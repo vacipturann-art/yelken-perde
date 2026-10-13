@@ -24,10 +24,11 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"></noscript>
 
 <!-- CSS -->
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=3">
 
 <!-- Structured Data (SEO) -->
 <script type="application/ld+json">
@@ -789,6 +790,52 @@
     .hero-buttons a { justify-content: center; }
   }
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XG42521ET7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XG42521ET7');
+</script>
+
+<style>
+/* Mobil menü kritik düzeltme - inline */
+@media (max-width: 900px) {
+  .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #FAF8F4 !important;
+    background: #FAF8F4 !important;
+    z-index: 9999 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 28px !important;
+    padding: 60px 24px 24px !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+  body.menu-open {
+    overflow: hidden !important;
+  }
+  body.menu-open .whatsapp-float {
+    display: none !important;
+  }
+  body.menu-open .nav-mobile-toggle {
+    z-index: 10000 !important;
+    position: fixed !important;
+    right: 24px !important;
+    top: 18px !important;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -797,7 +844,7 @@
   <a href="index.html" class="nav-logo">
     <img src="images/logo-nav.png" alt="Yelken Perde">
   </a>
-  <ul class="nav-links" id="navLinks">
+  <ul class="nav-links" id="navLinks" data-menu>
     <li><a href="index.html" class="active">Ana Sayfa</a></li>
     <li><a href="urunler.html">Ürünler</a></li>
     <li><a href="galeri.html">Galeri</a></li>
@@ -852,7 +899,7 @@
 
   <div class="hero-right">
     <div class="hero-image-main">
-      <img src="images/projects/modern-krem-bej-tul-fon.jpg" alt="Modern salon perde uygulaması">
+      <picture><source media="(max-width: 600px)" srcset="images/projects/modern-krem-bej-tul-fon-mobile.webp" type="image/webp"><source media="(max-width: 1024px)" srcset="images/projects/modern-krem-bej-tul-fon-tablet.webp" type="image/webp"><source srcset="images/projects/modern-krem-bej-tul-fon-desktop.webp" type="image/webp"><img src="images/projects/modern-krem-bej-tul-fon.jpg" alt="Modern salon perde uygulaması" fetchpriority="high"></picture>
     </div>
     <div class="hero-image-overlay">
       <div class="overlay-label">Yeni Koleksiyon</div>
@@ -918,7 +965,7 @@
 
   <div class="products-grid reveal">
     <a href="urunler.html#fon-perde" class="product-card large">
-      <img src="<?= e(yp_product('fon-perde')['image']) ?>" alt="<?= e(yp_product('fon-perde')['alt']) ?>" loading="lazy">
+      <?= yp_img(yp_product('fon-perde')['image'], yp_product('fon-perde')['alt'], ['loading' => 'lazy']) ?>
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Fon Perde</div>
@@ -927,7 +974,7 @@
     </a>
 
     <a href="urunler.html#ahsap-jaluzi" class="product-card">
-      <img src="<?= e(yp_product('ahsap-jaluzi')['image']) ?>" alt="<?= e(yp_product('ahsap-jaluzi')['alt']) ?>" loading="lazy">
+      <?= yp_img(yp_product('ahsap-jaluzi')['image'], yp_product('ahsap-jaluzi')['alt'], ['loading' => 'lazy']) ?>
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Ahşap Jaluzi</div>
@@ -936,7 +983,7 @@
     </a>
 
     <a href="urunler.html#zebra-perde" class="product-card">
-      <img src="<?= e(yp_product('zebra-perde')['image']) ?>" alt="<?= e(yp_product('zebra-perde')['alt']) ?>" loading="lazy">
+      <?= yp_img(yp_product('zebra-perde')['image'], yp_product('zebra-perde')['alt'], ['loading' => 'lazy']) ?>
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Zebra Perde</div>
@@ -945,7 +992,7 @@
     </a>
 
     <a href="urunler.html#stor-perde" class="product-card">
-      <img src="<?= e(yp_product('stor-perde')['image']) ?>" alt="<?= e(yp_product('stor-perde')['alt']) ?>" loading="lazy">
+      <?= yp_img(yp_product('stor-perde')['image'], yp_product('stor-perde')['alt'], ['loading' => 'lazy']) ?>
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Stor Perde</div>
@@ -954,7 +1001,7 @@
     </a>
 
     <a href="urunler.html#tul-perde" class="product-card">
-      <img src="<?= e(yp_product('tul-perde')['image']) ?>" alt="<?= e(yp_product('tul-perde')['alt']) ?>" loading="lazy">
+      <?= yp_img(yp_product('tul-perde')['image'], yp_product('tul-perde')['alt'], ['loading' => 'lazy']) ?>
       <span class="product-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
       <div class="product-info">
         <div class="product-name">Tül Perde</div>
@@ -1006,7 +1053,7 @@
 
   <div class="neden-visual reveal">
     <div class="neden-img-main">
-      <img src="images/projects/altin-lux-salon-klasik.jpg" alt="Lüks salon perde uygulaması">
+      <picture><source media="(max-width: 600px)" srcset="images/projects/altin-lux-salon-klasik-mobile.webp" type="image/webp"><source media="(max-width: 1024px)" srcset="images/projects/altin-lux-salon-klasik-tablet.webp" type="image/webp"><source srcset="images/projects/altin-lux-salon-klasik-desktop.webp" type="image/webp"><img src="images/projects/altin-lux-salon-klasik.jpg" alt="Lüks salon perde uygulaması"></picture>
     </div>
     <div class="neden-card-accent">
       <div class="big-number">500<span style="font-size: 28px">+</span></div>
@@ -1140,7 +1187,7 @@
 
   <div class="randevu-right">
     <div class="randevu-image">
-      <img src="images/projects/altin-drapeli-modern-klasik.jpg" alt="">
+      <picture><source media="(max-width: 600px)" srcset="images/projects/altin-drapeli-modern-klasik-mobile.webp" type="image/webp"><source media="(max-width: 1024px)" srcset="images/projects/altin-drapeli-modern-klasik-tablet.webp" type="image/webp"><source srcset="images/projects/altin-drapeli-modern-klasik-desktop.webp" type="image/webp"><img src="images/projects/altin-drapeli-modern-klasik.jpg" alt=""></picture>
     </div>
     <div class="randevu-quote">
       <blockquote>
@@ -1220,8 +1267,8 @@
   <div class="footer-bottom">
     <p class="footer-copy">© 2026 Yelken Perde. Tüm hakları saklıdır.</p>
     <div class="footer-legal">
-      <a href="#">Gizlilik Politikası</a>
-      <a href="#">KVKK</a>
+      <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
+      <a href="kvkk.html">KVKK</a>
     </div>
   </div>
 </footer>
@@ -1231,6 +1278,6 @@
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
 </a>
 
-<script src="main.js"></script>
+<script src="main.js?v=3"></script>
 </body>
 </html>

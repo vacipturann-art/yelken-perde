@@ -565,6 +565,7 @@ function viewBlog(main, route) {
         h('div', { class: 'info' },
           h('div', { class: 'title' }, p.title),
           h('div', { class: 'muted' }, [p.category, formatDate(p.date)].filter(Boolean).join(' · '))),
+        p.static && h('span', { class: 'pill', title: 'Özel tasarımlı sayfa' }, 'Tasarımlı'),
         h('span', { class: 'pill' + (p.published ? ' live' : '') }, p.published ? 'Yayında' : 'Taslak'))))
       : h('div', { class: 'empty' }, 'Henüz yazı yok.')));
 }
@@ -585,10 +586,12 @@ function blogEditor(main, post) {
   post = post || { title: '', slug: '', category: '', date: new Date().toISOString().slice(0, 10), cover: '', excerpt: '', content: '', published: false };
   let cover = post.cover;
   let slugTouched = !isNew;
+  const isStatic = !!post.static;  // blog/ klasöründeki tasarımlı sabit sayfa
   const markDirty = () => { dirty = true; };
 
   const title = h('input', { type: 'text', value: post.title, maxlength: 160, required: true, oninput: () => { if (!slugTouched) slug.value = slugify(title.value); markDirty(); } });
-  const slug = h('input', { type: 'text', value: post.slug, maxlength: 80, oninput: () => { slugTouched = true; markDirty(); } });
+  const slug = h('input', { type: 'text', value: post.slug, maxlength: 80, disabled: isStatic, oninput: () => { slugTouched = true; markDirty(); } });
+  const readTime = h('input', { type: 'text', inputmode: 'numeric', value: post.read_time || '', maxlength: 3, oninput: markDirty });
   const category = h('input', { type: 'text', value: post.category, maxlength: 60, placeholder: 'ör. Bakım Rehberi', oninput: markDirty });
   const date = h('input', { type: 'date', value: post.date, oninput: markDirty });
   const excerpt = h('textarea', { rows: 3, maxlength: 400, placeholder: 'Blog listesinde ve Google’da görünen kısa özet', oninput: markDirty }, post.excerpt);
@@ -659,7 +662,7 @@ function blogEditor(main, post) {
     previewBtn);
 
   const saveBtn = h('button', { class: 'btn gold', type: 'submit' }, 'Kaydet');
-  const delBtn = !isNew && h('button', { class: 'btn danger', type: 'button', onclick: () => {
+  const delBtn = !isNew && !isStatic && h('button', { class: 'btn danger', type: 'button', onclick: () => {
     if (!confirm('Bu yazı kalıcı olarak silinsin mi?')) return;
     busy(delBtn, async () => {
       await api('blog_delete', { id: post.id });
@@ -673,7 +676,7 @@ function blogEditor(main, post) {
   const form = h('form', { onsubmit: (e) => {
     e.preventDefault();
     busy(saveBtn, async () => {
-      const r = await api('blog_save', { post: { id: post.id, title: title.value, slug: slug.value, category: category.value, date: date.value, cover, excerpt: excerpt.value, content: content.value, published: published.checked } });
+      const r = await api('blog_save', { post: { id: post.id, title: title.value, slug: slug.value, category: category.value, date: date.value, cover, excerpt: excerpt.value, content: content.value, read_time: readTime.value, published: published.checked } });
       const i = S.data.blog.findIndex((p) => p.id === r.post.id);
       if (i >= 0) S.data.blog[i] = r.post; else S.data.blog.unshift(r.post);
       S.data.blog.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
@@ -694,9 +697,13 @@ function blogEditor(main, post) {
         h('label', { class: 'field' }, h('span', {}, 'Kategori'), category),
         h('label', { class: 'field' }, h('span', {}, 'Tarih'), date)),
       h('label', { class: 'field' }, h('span', {}, 'Adres (blog/…html)'), slug),
+      isStatic && h('label', { class: 'field', style: 'max-width:200px' }, h('span', {}, 'Okuma süresi (dk)'), readTime),
       h('div', { class: 'field' }, h('span', { class: 'muted' }, 'Kapak görseli'), h('div', { class: 'cover-box' }, coverImg, coverBtn)),
       h('label', { class: 'field' }, h('span', {}, 'Kısa özet'), excerpt)),
-    h('section', { class: 'card stack' },
+    isStatic ? h('section', { class: 'card stack' },
+      h('h2', {}, 'Yazı içeriği'),
+      h('p', { class: 'help' }, 'Bu yazı özel tasarımlı bir sayfadır (blog/' + post.slug + '.html). İçeriği panelden değiştirilemez; buradan sadece blog listesinde görünen başlık, özet, kapak görseli ve kategori düzenlenir. “Yayında” işareti kaldırılırsa yazı blog listesinden gizlenir.'))
+    : h('section', { class: 'card stack' },
       h('h2', {}, 'Yazı içeriği'),
       h('div', {}, toolbar, content, preview),
       h('div', { class: 'help' },

@@ -160,6 +160,24 @@ nav.scrolled .nav-logo img {
   transition: all 0.3s;
 }
 
+/* Menü açıkken X şekline dönüş */
+body.menu-open .nav-mobile-toggle {
+  z-index: 120;
+  position: relative;
+}
+
+body.menu-open .nav-mobile-toggle span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+body.menu-open .nav-mobile-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+body.menu-open .nav-mobile-toggle span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
 /* ─── BUTONLAR ─── */
 .btn-primary {
   display: inline-flex;
@@ -523,16 +541,31 @@ footer {
   .nav-mobile-toggle { display: flex; }
 
   .nav-links.open {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--cream);
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #FAF8F4 !important;
     justify-content: center;
     align-items: center;
     gap: 28px;
-    z-index: 90;
+    z-index: 9999 !important;
     padding-top: 60px;
+  }
+
+  /* Mobil menü açıkken sayfa kaydırmasını engelle ve içeriği kapat */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* Menü açıkken WhatsApp butonunu gizle */
+  body.menu-open .whatsapp-float {
+    display: none;
   }
 
   .nav-links.open a {

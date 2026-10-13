@@ -4,10 +4,9 @@ Site PHP ile çalışır (PHP 7.4 veya üzeri). Veritabanı gerekmez; içerik `d
 
 ## Sunucuya yükleme (cPanel)
 
-1. Depodaki tüm dosyaları `public_html/` içine yükleyin (gizli `.htaccess` dosyaları dahil).
-2. **`images/` klasörünü de yükleyin.** Bu klasör depoda yok; mevcut fotoğraflar, logo ve favicon bu klasördedir.
-3. `data/` ve `uploads/` klasörlerinin yazılabilir olduğundan emin olun (izin: 755).
-4. Hemen ardından `https://yelkenperde.com/admin/` adresine girip **panel şifresini oluşturun**. Şifre oluşturulana kadar ilk giren kişi şifreyi belirleyebilir; bu adımı geciktirmeyin.
+1. Depodaki tüm dosyaları `public_html/` içine yükleyin (gizli `.htaccess` dosyaları ve `images/` klasörü dahil).
+2. `data/` ve `uploads/` klasörlerinin yazılabilir olduğundan emin olun (izin: 755).
+3. Hemen ardından `https://yelkenperde.com/admin/` adresine girip **panel şifresini oluşturun**. Şifre oluşturulana kadar ilk giren kişi şifreyi belirleyebilir; bu adımı geciktirmeyin.
 
 > Güncelleme yüklerken `data/` ve `uploads/` klasörlerinin içeriğinin **üzerine yazmayın**: panelden eklenen her şey bu klasörlerdedir. (Depoda bu klasörlerde sadece `.htaccess` bulunur, normal bir yükleme bunları bozmaz.)
 
@@ -27,7 +26,16 @@ Site PHP ile çalışır (PHP 7.4 veya üzeri). Veritabanı gerekmez; içerik `d
 
 ## Adresler
 
-Eski adresler aynen çalışır: `galeri.html`, `urunler.html`, `blog.html` istekleri `.htaccess` ile PHP sayfalarına yönlendirilir. Blog yazıları `blog/yazi-adi.html` adresinde açılır.
+Netlify'daki eski adreslerin hepsi aynen çalışır (Google'daki kayıtlar bozulmaz):
+
+- `galeri.html`, `urunler.html`, `blog.html` ve uzantısız hâlleri (`/galeri`, `/urunler`, `/blog`) `.htaccess` ile PHP sayfalarına yönlendirilir.
+- `/hakkimizda`, `/kvkk` gibi uzantısız adresler ilgili `.html` dosyasını açar.
+- `sitemap.xml` otomatik üretilir; panelden eklenen blog yazıları da içinde yer alır.
+
+## Blog yazıları
+
+- `blog/` klasöründeki 4 yazı özel tasarımlı sayfalardır. Panelde "Tasarımlı" etiketiyle görünürler; panelden sadece blog listesindeki başlık, özet, kapak görseli, kategori ve okuma süresi düzenlenir. "Yayında" işareti kaldırılırsa listeden gizlenir.
+- Panelden yazılan yeni yazılar aynı tasarımla `blog/yazi-adi.html` adresinde yayınlanır.
 
 ## Dosya yapısı
 

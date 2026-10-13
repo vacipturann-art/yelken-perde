@@ -96,6 +96,22 @@ function yp_youtube_id(string $input): string {
   return '';
 }
 
+/* Görsel etiketi. images/ altındaki bir .jpg için -mobile/-tablet/-desktop.webp
+   sürümleri varsa ekran boyutuna göre WebP sunan <picture> üretir. */
+function yp_img(string $src, string $alt = '', array $attrs = []): string {
+  $extra = '';
+  foreach ($attrs as $k => $v) $extra .= ' ' . $k . ($v === true ? '' : '="' . e($v) . '"');
+  $img = '<img src="' . e($src) . '" alt="' . e($alt) . '"' . $extra . '>';
+
+  if (!preg_match('~^(images/.+)\.jpe?g$~i', $src, $m) || !is_file(YP_ROOT . '/' . $m[1] . '-desktop.webp')) return $img;
+  $b = e($m[1]);
+  return '<picture>'
+    . '<source media="(max-width: 600px)" srcset="' . $b . '-mobile.webp" type="image/webp">'
+    . '<source media="(max-width: 1024px)" srcset="' . $b . '-tablet.webp" type="image/webp">'
+    . '<source srcset="' . $b . '-desktop.webp" type="image/webp">'
+    . $img . '</picture>';
+}
+
 // Galeri ve vitrin kartlarındaki önizleme görseli
 function yp_item_thumb(array $item): string {
   if (!empty($item['thumb'])) return $item['thumb'];
@@ -122,7 +138,7 @@ function yp_gallery_item_html(array $item, bool $overlay = true): string {
      . ' data-caption="' . e($caption) . '">';
 
   if ($thumb !== '') {
-    $h .= '<img src="' . e($thumb) . '" alt="' . e($alt) . '" loading="lazy">';
+    $h .= yp_img($thumb, $alt, ['loading' => 'lazy']);
   } else {
     // Kapak karesi oluşturulamamış video: ilk kareyi tarayıcı göstersin
     $h .= '<video src="' . e($item['src']) . '#t=0.5" muted playsinline preload="metadata" aria-label="' . e($alt) . '"></video>';

@@ -179,20 +179,25 @@ function blog_post(array $src, array $posts): array {
 
   $title = text($src['title'] ?? '', 160);
   if ($title === '') fail('Yazı başlığı boş olamaz.');
+  $static = !empty($old['static']);  // blog/ klasöründeki tasarımlı sabit sayfa
 
-  $slug = yp_slugify((string)($src['slug'] ?? '') ?: $title);
-  if ($slug === '') fail('Yazı adresi oluşturulamadı; başlığı kontrol edin.');
-  $base = $slug;
-  for ($n = 2; ; $n++) {
-    $clash = find_index($posts, 'slug', $slug);
-    if ($clash < 0 || $clash === $i) break;
-    $slug = "$base-$n";
+  if ($static) {
+    $slug = $old['slug'];  // Adresi ve içeriği dosyada; panelden sadece liste bilgileri değişir
+  } else {
+    $slug = yp_slugify((string)($src['slug'] ?? '') ?: $title);
+    if ($slug === '') fail('Yazı adresi oluşturulamadı; başlığı kontrol edin.');
+    $base = $slug;
+    for ($n = 2; ; $n++) {
+      $clash = find_index($posts, 'slug', $slug);
+      if (($clash < 0 || $clash === $i) && !is_file(YP_ROOT . "/blog/$slug.html")) break;
+      $slug = "$base-$n";
+    }
   }
 
   $date = (string)($src['date'] ?? '');
   if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) $date = date('Y-m-d');
 
-  return [
+  $post = [
     'id'        => $old['id'] ?? ('b' . bin2hex(random_bytes(5))),
     'slug'      => $slug,
     'title'     => $title,
@@ -203,6 +208,13 @@ function blog_post(array $src, array $posts): array {
     'content'   => str_replace("\r\n", "\n", text($src['content'] ?? '', 60000)),
     'published' => !empty($src['published']),
   ];
+  if ($static) {
+    $post['content'] = '';
+    $post['static'] = true;
+    $rt = (int)($src['read_time'] ?? ($old['read_time'] ?? 0));
+    if ($rt > 0) $post['read_time'] = min($rt, 120);
+  }
+  return $post;
 }
 
 /* ─────────── Dosya yükleme (parçalı) ───────────
@@ -418,6 +430,7 @@ switch ($action) {
       $i = find_index($posts, 'id', (string)($in['id'] ?? ''));
       if ($i < 0) fail('Yazı bulunamadı.', 404);
       $old = $posts[$i];
+      if (!empty($old['static'])) fail('Tasarımlı sabit yazılar silinemez; listeden gizlemek için “Yayında” işaretini kaldırın.');
       array_splice($posts, $i, 1);
       yp_write('blog', $posts);
       preg_match_all('~uploads/[A-Za-z0-9/_.-]+~', (string)($old['content'] ?? ''), $m);

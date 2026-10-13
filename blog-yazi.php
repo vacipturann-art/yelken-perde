@@ -3,7 +3,7 @@ require __DIR__ . '/inc/lib.php';
 
 $slug = (string)($_GET['slug'] ?? '');
 $post = preg_match('/^[a-z0-9-]+$/', $slug) ? yp_find_post($slug) : null;
-if ($post && empty($post['published'])) $post = null;
+if ($post && (empty($post['published']) || !empty($post['static']))) $post = null;
 if (!$post) http_response_code(404);
 
 // Sayfa /blog/yazi.html adresinden açıldığı için göreli bağlantılar site köküne göre çözülür
@@ -11,7 +11,8 @@ $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '
 $site = 'https://yelkenperde.com/';
 $url = $post ? $site . 'blog/' . $post['slug'] . '.html' : $site . 'blog.html';
 $desc = $post ? ($post['excerpt'] ?? '') : '';
-$related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($p) use ($post) { return $p['id'] !== $post['id']; })), 0, 3) : [];
+$related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($p) use ($post) { return $p['id'] !== $post['id']; })), 0, 2) : [];
+$month = $post ? preg_replace('/^\d+ /', '', yp_date_tr($post['date'])) : '';
 ?><!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -19,7 +20,7 @@ $related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="<?= e($base) ?>">
 <?php if ($post): ?>
-<title><?= e($post['title']) ?> — Yelken Perde Blog</title>
+<title><?= e($post['title']) ?> — Yelken Perde</title>
 <meta name="description" content="<?= e($desc) ?>">
 <link rel="canonical" href="<?= e($url) ?>">
 <meta property="og:type" content="article">
@@ -28,10 +29,8 @@ $related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($
 <?php if (!empty($post['cover'])): ?>
 <meta property="og:image" content="<?= e($site . $post['cover']) ?>">
 <?php endif; ?>
-<meta property="og:url" content="<?= e($url) ?>">
-<meta property="og:locale" content="tr_TR">
 <script type="application/ld+json">
-<?= json_encode([
+<?= json_encode(array_filter([
   '@context' => 'https://schema.org',
   '@type' => 'BlogPosting',
   'headline' => $post['title'],
@@ -39,249 +38,120 @@ $related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($
   'image' => !empty($post['cover']) ? $site . $post['cover'] : null,
   'datePublished' => $post['date'],
   'author' => ['@type' => 'Organization', 'name' => 'Yelken Perde'],
-  'publisher' => ['@type' => 'Organization', 'name' => 'Yelken Perde', 'logo' => ['@type' => 'ImageObject', 'url' => $site . 'images/logo.jpg']],
+  'publisher' => ['@type' => 'Organization', 'name' => 'Yelken Perde', 'logo' => ['@type' => 'ImageObject', 'url' => $site . 'images/logo.png']],
   'mainEntityOfPage' => $url,
-], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) ?>
+]), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) ?>
 
 </script>
 <?php else: ?>
-<title>Yazı bulunamadı — Yelken Perde Blog</title>
+<title>Yazı bulunamadı — Yelken Perde</title>
 <meta name="robots" content="noindex">
 <?php endif; ?>
 <link rel="icon" type="image/png" href="images/favicon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap"></noscript>
+<link rel="stylesheet" href="styles.css?v=3">
 
 <style>
-  .blog-list {
-    padding: 40px 80px 100px;
-    background: var(--cream);
+  .article-hero { padding: 160px 24px 48px; text-align: center; background: linear-gradient(180deg, var(--cream) 0%, var(--warm-white) 100%); border-bottom: 1px solid var(--linen); }
+  .article-category { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); background: rgba(184,151,90,0.1); padding: 6px 14px; border-radius: 2px; margin-bottom: 20px; }
+  .article-title { font-family: var(--serif); font-size: clamp(32px, 4vw, 52px); font-weight: 400; line-height: 1.15; color: var(--charcoal); max-width: 880px; margin: 0 auto 20px; }
+  .article-title em { font-style: italic; color: var(--gold); }
+  .article-meta { display: flex; justify-content: center; align-items: center; gap: 16px; font-size: 12px; font-weight: 300; color: var(--stone); margin-top: 16px; }
+  .article-meta span.dot { color: var(--sand); }
+  .article-image { max-width: 1200px; margin: 48px auto 0; padding: 0 24px; }
+  .article-image img { width: 100%; border-radius: 4px; aspect-ratio: 16/9; object-fit: cover; box-shadow: var(--shadow-md); }
+  .article-body { max-width: 720px; margin: 0 auto; padding: 64px 24px 80px; }
+  .prose { font-family: var(--sans); font-size: 16px; font-weight: 300; line-height: 1.85; color: var(--umber); }
+  .prose > p:first-child::first-letter { font-family: var(--serif); font-size: 56px; font-weight: 400; color: var(--gold); float: left; line-height: 0.9; margin: 8px 12px 0 0; }
+  .prose p { margin-bottom: 24px; }
+  .prose h2 { font-family: var(--serif); font-size: 32px; font-weight: 400; line-height: 1.2; color: var(--charcoal); margin-top: 56px; margin-bottom: 20px; letter-spacing: -0.01em; }
+  .prose h2 em { font-style: italic; color: var(--gold); }
+  .prose h3 { font-family: var(--sans); font-size: 19px; font-weight: 500; line-height: 1.4; color: var(--charcoal); margin-top: 36px; margin-bottom: 14px; }
+  .prose ul, .prose ol { margin: 0 0 24px 20px; padding-left: 20px; }
+  .prose li { margin-bottom: 12px; line-height: 1.75; }
+  .prose blockquote { border-left: 3px solid var(--gold); padding: 16px 0 16px 28px; margin: 32px 0; font-family: var(--serif); font-size: 22px; font-weight: 400; font-style: italic; color: var(--umber); line-height: 1.5; }
+  .prose strong { font-weight: 500; color: var(--charcoal); }
+  .prose a { color: var(--gold); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color 0.3s; }
+  .warning-box { background: #FDF4E7; border-left: 4px solid #D4B07A; padding: 20px 24px; margin: 24px 0; border-radius: 0 4px 4px 0; }
+  .warning-box strong { display: block; margin-bottom: 6px; color: var(--umber); font-weight: 500; }
+  .warning-box p { font-size: 14px; line-height: 1.7; color: var(--stone); margin: 0; }
+  .cta-inline { background: var(--cream-dark); border-left: 4px solid var(--gold); padding: 28px 32px; margin: 40px 0; border-radius: 0 4px 4px 0; }
+  .cta-inline h4 { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--charcoal); margin-bottom: 10px; }
+  .cta-inline p { font-size: 14px; color: var(--stone); margin-bottom: 18px; }
+  .article-footer { max-width: 720px; margin: 0 auto; padding: 32px 24px 80px; border-top: 1px solid var(--linen); }
+  .article-back { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone); transition: color 0.3s; margin-bottom: 32px; }
+  .article-back:hover { color: var(--gold); }
+  .related-posts { background: var(--cream-dark); padding: 64px 24px; }
+  .related-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .related-card { display: flex; gap: 16px; padding: 20px; background: var(--warm-white); border-radius: 4px; border: 1px solid var(--linen); transition: all 0.3s; }
+  .related-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .related-thumb { width: 100px; height: 100px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .related-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .related-info { flex: 1; }
+  .related-info .label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .related-info h4 { font-family: var(--serif); font-size: 17px; font-weight: 400; line-height: 1.3; color: var(--charcoal); }
+  .prose figure { margin: 32px 0; }
+  .prose figure img { width: 100%; border-radius: 4px; }
+  .prose figcaption { font-size: 13px; color: var(--stone); text-align: center; margin-top: 10px; }
+  .prose a.btn-primary { color: var(--warm-white); text-decoration: none; }
+  @media (max-width: 700px) { .article-hero { padding: 120px 24px 32px; } .article-body { padding: 48px 24px 64px; } .related-grid { grid-template-columns: 1fr; } .prose h2 { font-size: 26px; } }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XG42521ET7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XG42521ET7');
+</script>
+
+<style>
+/* Mobil menü kritik düzeltme - inline */
+@media (max-width: 900px) {
+  .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #FAF8F4 !important;
+    background: #FAF8F4 !important;
+    z-index: 9999 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 28px !important;
+    padding: 60px 24px 24px !important;
+    margin: 0 !important;
+    list-style: none !important;
   }
-
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    max-width: 1400px;
-    margin: 0 auto;
+  body.menu-open {
+    overflow: hidden !important;
   }
-
-  .blog-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--warm-white);
-    border-radius: 4px;
-    overflow: hidden;
-    transition: all 0.4s;
-    border: 1px solid var(--linen);
+  body.menu-open .whatsapp-float {
+    display: none !important;
   }
-
-  .blog-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
-    border-color: transparent;
+  body.menu-open .nav-mobile-toggle {
+    z-index: 10000 !important;
+    position: fixed !important;
+    right: 24px !important;
+    top: 18px !important;
   }
-
-  .blog-card-image {
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    background: var(--linen);
-  }
-
-  .blog-card-image img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.8s;
-  }
-
-  .blog-card:hover .blog-card-image img { transform: scale(1.05); }
-
-  .blog-card-body {
-    padding: 28px 28px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1;
-  }
-
-  .blog-card-meta {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-
-  .blog-card-meta span { color: var(--sand); }
-
-  .blog-card-title {
-    font-family: var(--serif);
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1.3;
-    color: var(--charcoal);
-    transition: color 0.3s;
-  }
-
-  .blog-card:hover .blog-card-title { color: var(--gold); }
-
-  .blog-card-excerpt {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.7;
-    color: var(--stone);
-    flex: 1;
-  }
-
-  .blog-card-readmore {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--charcoal);
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    margin-top: 8px;
-    transition: color 0.3s, gap 0.3s;
-  }
-
-  .blog-card:hover .blog-card-readmore {
-    color: var(--gold);
-    gap: 12px;
-  }
-
-  @media (max-width: 1024px) {
-    .blog-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
-  }
-
-  @media (max-width: 700px) {
-    .blog-list { padding: 32px 24px 64px; }
-    .blog-grid { grid-template-columns: 1fr; gap: 20px; }
-    .blog-card-body { padding: 24px; }
-    .blog-card-title { font-size: 20px; }
-  }
-
-  /* YAZI */
-  .post-header .section-title { font-size: clamp(34px, 5vw, 56px); }
-
-  .post-meta {
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--stone);
-  }
-
-  .post-meta span { color: var(--sand); margin: 0 6px; }
-
-  .post-cover {
-    max-width: 1100px;
-    margin: -40px auto 0;
-    padding: 0 40px;
-    position: relative;
-  }
-
-  .post-cover img {
-    width: 100%;
-    aspect-ratio: 16 / 8;
-    object-fit: cover;
-    border-radius: 4px;
-    box-shadow: var(--shadow-lg);
-  }
-
-  .post-body {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 64px 24px 40px;
-    font-size: 18px;
-    line-height: 1.85;
-    color: var(--umber);
-  }
-
-  .post-body > * + * { margin-top: 1.1em; }
-
-  .post-body h2 {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 34px;
-    line-height: 1.2;
-    color: var(--charcoal);
-    margin-top: 1.8em;
-  }
-
-  .post-body h3 {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: 25px;
-    color: var(--charcoal);
-    margin-top: 1.5em;
-  }
-
-  .post-body strong { font-weight: 500; color: var(--charcoal); }
-  .post-body a { color: var(--gold-dark); text-decoration: underline; text-underline-offset: 3px; }
-  .post-body ul, .post-body ol { padding-left: 1.3em; }
-  .post-body li + li { margin-top: 0.4em; }
-  .post-body li::marker { color: var(--gold); }
-
-  .post-body blockquote {
-    border-left: 2px solid var(--gold);
-    padding: 4px 0 4px 24px;
-    font-family: var(--serif);
-    font-size: 24px;
-    font-style: italic;
-    color: var(--charcoal);
-  }
-
-  .post-body figure img { border-radius: 4px; width: 100%; }
-  .post-body figcaption { font-size: 14px; color: var(--stone); text-align: center; margin-top: 10px; }
-
-  .post-cta {
-    max-width: 720px;
-    margin: 0 auto 100px;
-    padding: 40px;
-    background: var(--warm-white);
-    border: 1px solid var(--linen);
-    border-radius: 4px;
-    text-align: center;
-  }
-
-  .post-cta h2 {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: 32px;
-    margin-bottom: 12px;
-  }
-
-  .post-cta p { color: var(--stone); margin-bottom: 24px; }
-  .post-cta .row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-  .post-related {
-    background: var(--warm-white);
-    border-top: 1px solid var(--linen);
-    padding-top: 80px;
-  }
-
-  .post-related > .section-title { text-align: center; margin: 0 auto 48px; }
-
-  @media (max-width: 900px) {
-    .post-cover { padding: 0 16px; margin-top: -24px; }
-    .post-body { font-size: 17px; padding-top: 48px; }
-    .post-body h2 { font-size: 28px; }
-    .post-cta { margin: 0 16px 64px; padding: 28px 20px; }
-  }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="navbar">
-  <a href="index.html" class="nav-logo">
-    <img src="images/logo-nav.png" alt="Yelken Perde">
-  </a>
-  <ul class="nav-links" id="navLinks">
+  <a href="index.html" class="nav-logo"><img src="images/logo-nav.png" alt="Yelken Perde"></a>
+  <ul class="nav-links" id="navLinks" data-menu>
     <li><a href="index.html">Ana Sayfa</a></li>
     <li><a href="urunler.html">Ürünler</a></li>
     <li><a href="galeri.html">Galeri</a></li>
@@ -290,67 +160,61 @@ $related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($
     <li><a href="iletisim.html">İletişim</a></li>
     <li><a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="nav-cta" target="_blank">Randevu Al</a></li>
   </ul>
-  <button class="nav-mobile-toggle" onclick="toggleMenu()" aria-label="Menü">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-mobile-toggle" onclick="toggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
 
+
 <?php if ($post): ?>
-<!-- YAZI BAŞLIĞI -->
-<header class="page-header post-header">
-  <div class="breadcrumb">
-    <a href="index.html">Ana Sayfa</a>
-    <span>/</span>
-    <a href="blog.html">Blog</a>
-    <span>/</span>
-    <span><?= e($post['category'] ?: 'Yazı') ?></span>
+<header class="article-hero">
+<?php if (!empty($post['category'])): ?>
+  <span class="article-category"><?= e($post['category']) ?></span>
+<?php endif; ?>
+  <h1 class="article-title"><?= e($post['title']) ?></h1>
+  <div class="article-meta">
+    <span>Yelken Perde</span>
+    <span class="dot">·</span>
+    <span><?= yp_read_time($post) ?> dk okuma</span>
+    <span class="dot">·</span>
+    <span><?= e($month) ?></span>
   </div>
-  <h1 class="section-title"><?= e($post['title']) ?></h1>
-  <p class="post-meta">
-    <?= e(yp_date_tr($post['date'])) ?><span>·</span><?= yp_read_time($post) ?> dk okuma
-  </p>
 </header>
 
 <?php if (!empty($post['cover'])): ?>
-<div class="post-cover">
-  <img src="<?= e($post['cover']) ?>" alt="<?= e($post['title']) ?>">
+<div class="article-image">
+  <?= yp_img($post['cover'], $post['title']) ?>
+
 </div>
 <?php endif; ?>
 
-<article class="post-body">
+<article class="article-body">
+  <div class="prose">
 <?= yp_markdown($post['content'] ?? '') ?>
+
+    <div class="cta-inline">
+      <h4>Ücretsiz keşif ve ölçüm</h4>
+      <p>Numuneleri evinize getiriyor, ölçüyü yerinde alıyoruz. Size en uygun seçenekleri birlikte belirleyelim.</p>
+      <a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20keşif%20randevusu%20almak%20istiyorum." class="btn-primary" target="_blank">WhatsApp'tan Randevu Al</a>
+    </div>
+  </div>
 </article>
 
-<aside class="post-cta">
-  <h2>Pencereniz için en doğru seçim</h2>
-  <p>Ücretsiz keşif randevusunda numuneleri evinize getiriyor, ölçüyü yerinde alıyoruz.</p>
-  <div class="row">
-    <a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20keşif%20randevusu%20almak%20istiyorum." class="btn-primary" target="_blank">WhatsApp'tan Randevu Al</a>
-    <a href="urunler.html" class="btn-secondary">Ürünleri İncele</a>
-  </div>
-</aside>
+<div class="article-footer">
+  <a href="blog.html" class="article-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Tüm Yazılara Dön
+  </a>
+</div>
 
 <?php if ($related): ?>
-<section class="blog-list post-related">
-  <h2 class="section-title">Diğer <em>Yazılarımız</em></h2>
-  <div class="blog-grid">
+<section class="related-posts">
+  <h3 class="section-eyebrow" style="text-align:center; margin-bottom: 32px;">Bunları da Okuyun</h3>
+  <div class="related-grid">
 <?php foreach ($related as $r): ?>
-    <a href="blog/<?= e($r['slug']) ?>.html" class="blog-card reveal">
-      <div class="blog-card-image">
-<?php if (!empty($r['cover'])): ?>
-        <img src="<?= e($r['cover']) ?>" alt="<?= e($r['title']) ?>" loading="lazy">
-<?php endif; ?>
-      </div>
-      <div class="blog-card-body">
-        <div class="blog-card-meta">
-          <?php if (!empty($r['category'])): ?><?= e($r['category']) ?> <span>·</span> <?php endif; ?><?= yp_read_time($r) ?> dk okuma
-        </div>
-        <h3 class="blog-card-title"><?= e($r['title']) ?></h3>
-        <p class="blog-card-excerpt"><?= e($r['excerpt'] ?? '') ?></p>
-        <span class="blog-card-readmore">
-          Yazıyı Oku
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </span>
+    <a href="blog/<?= e($r['slug']) ?>.html" class="related-card">
+      <div class="related-thumb"><?php if (!empty($r['cover'])): ?><?= yp_img($r['cover'], '') ?><?php endif; ?></div>
+      <div class="related-info">
+        <div class="label"><?= e($r['category'] ?? '') ?></div>
+        <h4><?= e($r['title']) ?></h4>
       </div>
     </a>
 <?php endforeach; ?>
@@ -359,15 +223,14 @@ $related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($
 <?php endif; ?>
 
 <?php else: ?>
-<header class="page-header">
-  <p class="section-eyebrow">404</p>
-  <h1 class="section-title">Aradığınız yazı <em>bulunamadı</em></h1>
-  <p class="section-desc">Yazı kaldırılmış ya da adresi değişmiş olabilir.</p>
-  <p style="margin-top:32px"><a href="blog.html" class="btn-primary">Tüm Yazılar</a></p>
+<header class="article-hero">
+  <span class="article-category">404</span>
+  <h1 class="article-title">Aradığınız yazı <em>bulunamadı</em></h1>
+  <p style="color: var(--stone); margin-bottom: 32px;">Yazı kaldırılmış ya da adresi değişmiş olabilir.</p>
+  <a href="blog.html" class="btn-primary">Tüm Yazılar</a>
 </header>
 <?php endif; ?>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
@@ -382,54 +245,17 @@ $related = $post ? array_slice(array_values(array_filter(yp_posts(), function ($
         </a>
       </div>
     </div>
-    <div class="footer-col">
-      <h4>Sayfalar</h4>
-      <ul>
-        <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="urunler.html">Ürünler</a></li>
-        <li><a href="galeri.html">Galeri</a></li>
-        <li><a href="hakkimizda.html">Hakkımızda</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="iletisim.html">İletişim</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Ürünler</h4>
-      <ul>
-        <li><a href="urunler.html#ahsap-jaluzi">Ahşap Jaluzi</a></li>
-        <li><a href="urunler.html#zebra-perde">Zebra Perde</a></li>
-        <li><a href="urunler.html#stor-perde">Stor Perde</a></li>
-        <li><a href="urunler.html#tul-perde">Tül Perde</a></li>
-        <li><a href="urunler.html#fon-perde">Fon Perde</a></li>
-        <li><a href="urunler.html#dikey-jaluzi">Dikey Jaluzi</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>İletişim</h4>
-      <div class="footer-contact">
-        <strong>Telefon</strong>
-        <a href="tel:+905423313413">0542 331 34 13</a><br><br>
-        <strong>E-posta</strong>
-        <a href="mailto:info@yelkenperde.com">info@yelkenperde.com</a><br><br>
-        <strong>Adres</strong>
-        Orhangazi Mah. Eşref Bitlis Blv. No:86<br>
-        Sultanbeyli / İstanbul
-      </div>
-    </div>
+    <div class="footer-col"><h4>Sayfalar</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="urunler.html">Ürünler</a></li><li><a href="galeri.html">Galeri</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="blog.html">Blog</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div>
+    <div class="footer-col"><h4>Ürünler</h4><ul><li><a href="urunler.html#ahsap-jaluzi">Ahşap Jaluzi</a></li><li><a href="urunler.html#zebra-perde">Zebra Perde</a></li><li><a href="urunler.html#stor-perde">Stor Perde</a></li><li><a href="urunler.html#tul-perde">Tül Perde</a></li><li><a href="urunler.html#fon-perde">Fon Perde</a></li><li><a href="urunler.html#dikey-jaluzi">Dikey Jaluzi</a></li></ul></div>
+    <div class="footer-col"><h4>İletişim</h4><div class="footer-contact"><strong>Telefon</strong><a href="tel:+905423313413">0542 331 34 13</a><br><br><strong>E-posta</strong><a href="mailto:info@yelkenperde.com">info@yelkenperde.com</a><br><br><strong>Adres</strong>Orhangazi Mah. Eşref Bitlis Blv. No:86<br>Sultanbeyli / İstanbul</div></div>
   </div>
-  <div class="footer-bottom">
-    <p class="footer-copy">© 2026 Yelken Perde. Tüm hakları saklıdır.</p>
-    <div class="footer-legal">
-      <a href="#">Gizlilik Politikası</a>
-      <a href="#">KVKK</a>
-    </div>
-  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2026 Yelken Perde. Tüm hakları saklıdır.</p><div class="footer-legal"><a href="gizlilik-politikasi.html">Gizlilik Politikası</a><a href="kvkk.html">KVKK</a></div></div>
 </footer>
 
 <a href="https://wa.me/905423313413?text=Merhaba,%20bilgi%20almak%20istiyorum." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
 </a>
 
-<script src="main.js"></script>
+<script src="main.js?v=3"></script>
 </body>
 </html>
