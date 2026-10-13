@@ -29,7 +29,7 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="styles.css?v=3">
-<link rel="stylesheet" href="home.css?v=2">
+<link rel="stylesheet" href="home.css?v=3">
 <script>if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ok');</script>
 
 <!-- Structured Data (SEO) -->
@@ -633,7 +633,8 @@
 <!-- ═══════ NAV ═══════ -->
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
-    <img src="images/logo-nav.png" alt="Yelken Perde">
+    <img class="logo-on-dark" src="images/logo-light.png" alt="Yelken Perde" width="173" height="240">
+    <img class="logo-on-light" src="images/logo-dark.png" alt="" aria-hidden="true" width="174" height="240">
   </a>
   <ul class="nav-links" id="navLinks" data-menu>
     <li><a href="index.html" class="active">Ana Sayfa</a></li>
@@ -642,8 +643,9 @@
     <li><a href="hakkimizda.html">Hakkımızda</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="iletisim.html">İletişim</a></li>
-    <li><a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="nav-cta" target="_blank">Randevu Al</a></li>
+    <li class="nav-cta-item"><a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="nav-cta" target="_blank">Randevu Al</a></li>
   </ul>
+  <a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="nav-side-cta" target="_blank">Randevu Al</a>
   <button class="nav-mobile-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Menü">
     <span></span><span></span><span></span>
   </button>
@@ -1107,6 +1109,6 @@ $heroSlides = [
 </a>
 
 <script src="main.js?v=3"></script>
-<script src="home.js?v=2"></script>
+<script src="home.js?v=3"></script>
 </body>
 </html>
