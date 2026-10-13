@@ -7,7 +7,7 @@ name: Natro'ya yükle
 
 on:
   push:
-    branches: [main, ccr-5b0aa126-169yuk]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:

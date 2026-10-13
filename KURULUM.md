@@ -4,7 +4,7 @@ Site PHP ile çalışır (PHP 7.4 veya üzeri). Veritabanı gerekmez; içerik `d
 
 ## Otomatik yükleme (GitHub → Natro)
 
-`.github/workflows/deploy.yml` her gönderimde depoyu FTP ile `public_html/` klasörüne yükler. GitHub'da deponun **Settings › Secrets and variables › Actions** sayfasına şu üç gizli değişken eklenmelidir:
+`.github/workflows/deploy.yml` **main** dalına her gönderimde depoyu FTP ile `public_html/` klasörüne yükler. GitHub'da deponun **Settings › Secrets and variables › Actions** sayfasına şu üç gizli değişken eklenmelidir:
 
 | Ad | Değer |
 |---|---|
