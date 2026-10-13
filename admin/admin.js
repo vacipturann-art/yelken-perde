@@ -482,7 +482,7 @@ function viewShowcase(main) {
         h('button', { class: 'icon-btn', title: 'Aşağı', disabled: i === ids.length - 1, onclick: () => swap(i + 1) }, '↓'),
         h('button', { class: 'icon-btn', title: 'Vitrinden çıkar', onclick: () => save(ids.filter((x) => x !== id)) }, '✕'));
     }) : [h('div', { class: 'empty' }, 'Vitrin boş. Ana sayfada bu bölüm gizlenir.')]));
-    count.textContent = `${ids.length} öğe` + (ids.length !== 8 ? ' · Ana sayfa düzeni 8 öğeyle en iyi görünür' : '');
+    count.textContent = `${ids.length} öğe` + (ids.length !== 7 ? ' · Ana sayfadaki kolaj 7 öğeyle en iyi görünür (fazlası gösterilmez)' : '');
   }
 
   function pick() {

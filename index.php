@@ -29,6 +29,8 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="home.css?v=1">
+<script>if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ok');</script>
 
 <!-- Structured Data (SEO) -->
 <script type="application/ld+json">
@@ -63,162 +65,6 @@
 
 <style>
   /* ═══════ ANA SAYFA ÖZEL STİLLERİ ═══════ */
-
-  /* HERO */
-  #hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 60px 80px 80px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-eyebrow {
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-title {
-    font-family: var(--serif);
-    font-size: clamp(44px, 5vw, 72px);
-    font-weight: 300;
-    line-height: 1.08;
-    color: var(--charcoal);
-    margin-bottom: 16px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  .hero-subtitle {
-    font-family: var(--serif);
-    font-size: clamp(18px, 1.8vw, 26px);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--stone);
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.55s forwards;
-  }
-
-  .hero-desc {
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 1.8;
-    color: var(--stone);
-    max-width: 440px;
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.7s forwards;
-  }
-
-  .hero-buttons {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.85s forwards;
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 44px;
-    margin-top: 60px;
-    padding-top: 36px;
-    border-top: 1px solid var(--linen);
-    opacity: 0;
-    animation: fadeUp 0.8s 1s forwards;
-  }
-
-  .stat-number {
-    font-family: var(--serif);
-    font-size: 36px;
-    font-weight: 300;
-    color: var(--charcoal);
-    line-height: 1;
-  }
-
-  .stat-number em {
-    color: var(--gold);
-    font-style: normal;
-  }
-
-  .stat-label {
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--stone);
-    margin-top: 6px;
-  }
-
-  .hero-right {
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    animation: fadeIn 1.2s 0.3s forwards;
-  }
-
-  .hero-image-main {
-    position: absolute;
-    inset: 80px 0 0 0;
-    background: var(--linen);
-    overflow: hidden;
-  }
-
-  .hero-image-main img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.95) saturate(0.95);
-  }
-
-  .hero-image-overlay {
-    position: absolute;
-    bottom: 40px;
-    left: 40px;
-    background: rgba(30,26,23,0.8);
-    backdrop-filter: blur(10px);
-    color: white;
-    padding: 20px 28px;
-    border-radius: 4px;
-    max-width: 280px;
-  }
-
-  .hero-image-overlay .overlay-label {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    margin-bottom: 6px;
-  }
-
-  .hero-image-overlay .overlay-title {
-    font-family: var(--serif);
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 1.3;
-  }
 
   /* MARQUEE */
   .marquee-section {
@@ -457,50 +303,6 @@
     color: var(--sand);
     margin-top: 12px;
     line-height: 1.5;
-  }
-
-  /* PROJE GALERİSİ PREVIEW */
-  #projeler-preview {
-    background: var(--cream-dark);
-  }
-
-  .gallery-header {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-
-  .gallery-header .section-title {
-    margin: 0 auto 16px;
-    max-width: 700px;
-  }
-
-  .gallery-grid-preview {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 48px;
-  }
-
-  .gallery-item {
-    aspect-ratio: 3/4;
-    overflow: hidden;
-    border-radius: 2px;
-    background: var(--linen);
-    position: relative;
-    cursor: pointer;
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .gallery-item:hover img { transform: scale(1.08); }
-
-  .gallery-cta {
-    text-align: center;
   }
 
   /* SÜREÇ */
@@ -754,12 +556,6 @@
 
   /* MOBİL */
   @media (max-width: 900px) {
-    #hero { grid-template-columns: 1fr; min-height: auto; padding-top: 72px; }
-    .hero-left { padding: 48px 24px; }
-    .hero-right { height: 340px; position: relative; }
-    .hero-image-main { inset: 0; }
-    .hero-image-overlay { bottom: 20px; left: 20px; max-width: 220px; padding: 14px 20px; }
-    .hero-stats { gap: 24px; margin-top: 44px; }
 
     .products-header { flex-direction: column; align-items: flex-start; }
     .products-grid { grid-template-columns: 1fr 1fr; }
@@ -768,7 +564,6 @@
     #neden { grid-template-columns: 1fr; padding: 64px 24px; }
     .neden-visual { height: 360px; }
 
-    .gallery-grid-preview { grid-template-columns: 1fr 1fr; }
 
     .steps-grid { grid-template-columns: 1fr 1fr; }
 
@@ -784,10 +579,6 @@
   @media (max-width: 600px) {
     .products-grid { grid-template-columns: 1fr 1fr; gap: 1px; }
     .steps-grid { grid-template-columns: 1fr; }
-    .gallery-grid-preview { grid-template-columns: 1fr 1fr; }
-    .hero-title { font-size: 38px; }
-    .hero-buttons { flex-direction: column; width: 100%; }
-    .hero-buttons a { justify-content: center; }
   }
 </style>
 <!-- Google tag (gtag.js) -->
@@ -837,7 +628,7 @@
 }
 </style>
 </head>
-<body>
+<body class="home">
 
 <!-- ═══════ NAV ═══════ -->
 <nav id="navbar">
@@ -858,20 +649,32 @@
   </button>
 </nav>
 
-<!-- ═══════ HERO ═══════ -->
-<section id="hero">
-  <div class="hero-left">
-    <p class="hero-eyebrow">Sultanbeyli · İstanbul · Est. 2010</p>
-    <h1 class="hero-title">
-      Pencerenize<br>
-      <em>Değer Katan</em><br>
-      Perdeler
-    </h1>
-    <p class="hero-subtitle">Jaluzi, Stor ve Perde Uzmanlığı</p>
-    <p class="hero-desc">
+<!-- ═══════ HERO: kaydırınca açılan perde ═══════ -->
+<section id="hero" class="curtain-hero">
+  <div class="ch-stage">
+    <div class="ch-room">
+      <?= yp_img('images/projects/modern-krem-bej-tul-fon.jpg', 'Yelken Perde ile yenilenen modern salon', ['fetchpriority' => 'high']) ?>
+
+    </div>
+    <div class="ch-shade" aria-hidden="true"></div>
+
+    <div class="ch-rod" aria-hidden="true"></div>
+    <div class="ch-panel ch-left" aria-hidden="true"></div>
+    <div class="ch-panel ch-right" aria-hidden="true"></div>
+
+    <div class="ch-intro">
+      <p class="ch-eyebrow">Sultanbeyli · İstanbul · 2010'dan beri</p>
+      <h1 class="ch-title">Pencerenize<br><em>Değer Katan</em><br>Perdeler</h1>
+      <p class="ch-hint"><span>Kaydırın, perdeyi aralayın</span><i aria-hidden="true"></i></p>
+    </div>
+
+    <div class="ch-reveal">
+      <p class="ch-subtitle">Jaluzi, Stor ve Perde Uzmanlığı</p>
+      <p class="ch-lead">Işığın, mahremiyetin ve stilin <em>ölçüsünü</em> siz belirleyin.</p>
+      <p class="ch-desc">
       15 yıllık tecrübemizle evinizin ve işyerinizin atmosferini dönüştürüyoruz. Ücretsiz keşif, profesyonel ölçüm ve kusursuz montaj ile size özel çözümler sunuyoruz.
     </p>
-    <div class="hero-buttons">
+    <div class="ch-buttons">
       <a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="btn-primary" target="_blank">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         Ücretsiz Randevu Al
@@ -881,7 +684,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="hero-stats">
+    <div class="ch-stats">
       <div>
         <div class="stat-number">15<em>+</em></div>
         <div class="stat-label">Yıl Deneyim</div>
@@ -895,15 +698,6 @@
         <div class="stat-label">Müşteri Memnuniyeti</div>
       </div>
     </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="hero-image-main">
-      <picture><source media="(max-width: 600px)" srcset="images/projects/modern-krem-bej-tul-fon-mobile.webp" type="image/webp"><source media="(max-width: 1024px)" srcset="images/projects/modern-krem-bej-tul-fon-tablet.webp" type="image/webp"><source srcset="images/projects/modern-krem-bej-tul-fon-desktop.webp" type="image/webp"><img src="images/projects/modern-krem-bej-tul-fon.jpg" alt="Modern salon perde uygulaması" fetchpriority="high"></picture>
-    </div>
-    <div class="hero-image-overlay">
-      <div class="overlay-label">Yeni Koleksiyon</div>
-      <div class="overlay-title">Modern Fon & Tül Perde Kombinasyonları</div>
     </div>
   </div>
 </section>
@@ -1063,28 +857,38 @@
 </section>
 
 <!-- ═══════ GALERİ PREVIEW ═══════ -->
-<?php if ($showcase): ?>
-<section id="projeler-preview">
-  <div class="gallery-header reveal">
+<?php if ($showcase): $collage = array_slice($showcase, 0, 7); ?>
+<!-- ═══════ PROJELER: kaydırınca yakınlaşan kolaj ═══════ -->
+<section id="projeler-preview" class="zoom-collage zc-n<?= count($collage) ?>">
+  <div class="zc-head">
     <p class="section-eyebrow">Referans Projelerimiz</p>
     <h2 class="section-title">Son <em>İşlerimizden</em> Bir Seçki</h2>
-    <p class="section-desc" style="margin: 0 auto;">
-      İstanbul genelindeki evlerde ve işyerlerinde gerçekleştirdiğimiz kusursuz uygulamalar
-    </p>
   </div>
+  <div class="zc-stage">
+<?php foreach ($collage as $i => $item):
+  // Ortadaki fotoğraf ekranı dolduracağı için tam boyutlu sürüm kullanılır
+  $thumb = ($i === 0 && ($item['type'] ?? 'image') === 'image') ? $item['src'] : yp_item_thumb($item); ?>
+    <div class="zc-layer zc-<?= $i ?>">
+      <div class="zc-img" data-lightbox="<?= e(yp_item_full($item)) ?>" data-type="<?= e($item['type'] ?? 'image') ?>" data-caption="<?= e(($item['caption'] ?? '') ?: ($item['title'] ?? '')) ?>">
+<?php if ($thumb !== ''): ?>
+        <?= yp_img($thumb, ($item['alt'] ?? '') ?: ($item['title'] ?? ''), ['loading' => 'lazy']) ?>
 
-  <div class="gallery-grid-preview reveal">
-<?php foreach ($showcase as $item): ?>
-    <?= yp_gallery_item_html($item, false) ?>
-
+<?php else: ?>
+        <video src="<?= e($item['src']) ?>#t=0.5" muted playsinline preload="metadata"></video>
+<?php endif; ?>
+<?php if (($item['type'] ?? 'image') !== 'image'): ?>
+        <span class="gallery-play" aria-hidden="true"></span>
+<?php endif; ?>
+      </div>
+    </div>
 <?php endforeach; ?>
-  </div>
-
-  <div class="gallery-cta reveal">
-    <a href="galeri.html" class="btn-primary">
-      Tüm Projelerimizi Görün
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+    <div class="zc-caption">
+      <p>İstanbul genelindeki evlerde ve işyerlerinde gerçekleştirdiğimiz uygulamalar</p>
+      <a href="galeri.html" class="btn-primary zc-btn">
+        Tüm Projelerimizi Görün
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 <?php endif; ?>
@@ -1279,5 +1083,6 @@
 </a>
 
 <script src="main.js?v=3"></script>
+<script src="home.js?v=1"></script>
 </body>
 </html>
