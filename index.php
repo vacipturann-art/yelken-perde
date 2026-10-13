@@ -1109,6 +1109,6 @@ $heroSlides = [
 </a>
 
 <script src="main.js?v=3"></script>
-<script src="home.js?v=4"></script>
+<script src="home.js?v=5"></script>
 </body>
 </html>
