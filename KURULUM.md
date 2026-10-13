@@ -2,7 +2,19 @@
 
 Site PHP ile çalışır (PHP 7.4 veya üzeri). Veritabanı gerekmez; içerik `data/` klasöründeki JSON dosyalarında, yüklenen dosyalar `uploads/` klasöründe tutulur.
 
-## Sunucuya yükleme (cPanel)
+## Otomatik yükleme (GitHub → Natro)
+
+`.github/workflows/deploy.yml` her gönderimde depoyu FTP ile `public_html/` klasörüne yükler. GitHub'da deponun **Settings › Secrets and variables › Actions** sayfasına şu üç gizli değişken eklenmelidir:
+
+| Ad | Değer |
+|---|---|
+| `FTP_SERVER` | Natro'nun verdiği FTP sunucusu (alan adı henüz yönlenmediyse sunucu IP'si) |
+| `FTP_USERNAME` | cPanel / FTP kullanıcı adı |
+| `FTP_PASSWORD` | FTP şifresi |
+
+Yükleme sadece depodaki dosyaları gönderir; panelin sunucuda oluşturduğu içerik (`data/`, `uploads/`) silinmez.
+
+## Elle yükleme (cPanel)
 
 1. Depodaki tüm dosyaları `public_html/` içine yükleyin (gizli `.htaccess` dosyaları ve `images/` klasörü dahil).
 2. `data/` ve `uploads/` klasörlerinin yazılabilir olduğundan emin olun (izin: 755).

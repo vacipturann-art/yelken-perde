@@ -1,0 +1,36 @@
+# Natro hostinge otomatik yükleme (FTP)
+# Gerekli GitHub Secrets: FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
+#
+# Sadece depodaki dosyalar yüklenir. Panelin sunucuda oluşturduğu data/*.json
+# ve uploads/ içindeki dosyalar depoda olmadığı için silinmez ve üzerine yazılmaz.
+name: Natro'ya yükle
+
+on:
+  push:
+    branches: [main, ccr-5b0aa126-169yuk]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-natro
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: FTP ile yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: loose
+          server-dir: public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            KURULUM.md
