@@ -29,7 +29,7 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="styles.css?v=3">
-<link rel="stylesheet" href="home.css?v=1">
+<link rel="stylesheet" href="home.css?v=2">
 <script>if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ok');</script>
 
 <!-- Structured Data (SEO) -->
@@ -649,32 +649,41 @@
   </button>
 </nav>
 
-<!-- ═══════ HERO: kaydırınca açılan perde ═══════ -->
-<section id="hero" class="curtain-hero">
-  <div class="ch-stage">
-    <div class="ch-room">
-      <?= yp_img('images/projects/modern-krem-bej-tul-fon.jpg', 'Yelken Perde ile yenilenen modern salon', ['fetchpriority' => 'high']) ?>
-
+<!-- ═══════ HERO: kaydırdıkça değişen proje fotoğrafları ═══════ -->
+<?php
+$heroSlides = [
+  ['img' => 'images/projects/modern-krem-bej-tul-fon',      'label' => 'Modern Salon', 'sub' => 'Fon + Tül Perde'],
+  ['img' => 'images/projects/kahverengi-ahsap-jalusi-fon',  'label' => 'Klasik Salon', 'sub' => 'Drapeli Fon Perde'],
+  ['img' => 'images/projects/ahsap-jaluzi-manzaral-kahve',  'label' => 'Balkon',       'sub' => 'Ahşap Jaluzi'],
+  ['img' => 'images/projects/genis-salon-krem-beyaz-perde', 'label' => 'Geniş Salon',  'sub' => 'Tül + Fon Perde'],
+];
+?>
+<section id="hero" class="cine-hero" style="--n: <?= count($heroSlides) ?>">
+  <div class="cine-stage">
+    <div class="cine-slides">
+<?php foreach ($heroSlides as $i => $s): ?>
+      <div class="cine-slide"<?= $i ? ' aria-hidden="true"' : '' ?>>
+        <picture>
+          <source srcset="<?= e($s['img']) ?>-desktop.webp" type="image/webp">
+          <img src="<?= e($s['img']) ?>.jpg" alt="<?= e($s['label'] . ' — ' . $s['sub'] . ' uygulaması') ?>"<?= $i ? ' loading="lazy"' : ' fetchpriority="high"' ?>>
+        </picture>
+      </div>
+<?php endforeach; ?>
     </div>
-    <div class="ch-shade" aria-hidden="true"></div>
+    <div class="cine-shade" aria-hidden="true"></div>
 
-    <div class="ch-rod" aria-hidden="true"></div>
-    <div class="ch-panel ch-left" aria-hidden="true"></div>
-    <div class="ch-panel ch-right" aria-hidden="true"></div>
-
-    <div class="ch-intro">
-      <p class="ch-eyebrow">Sultanbeyli · İstanbul · 2010'dan beri</p>
-      <h1 class="ch-title">Pencerenize<br><em>Değer Katan</em><br>Perdeler</h1>
-      <p class="ch-hint"><span>Kaydırın, perdeyi aralayın</span><i aria-hidden="true"></i></p>
-    </div>
-
-    <div class="ch-reveal">
-      <p class="ch-subtitle">Jaluzi, Stor ve Perde Uzmanlığı</p>
-      <p class="ch-lead">Işığın, mahremiyetin ve stilin <em>ölçüsünü</em> siz belirleyin.</p>
-      <p class="ch-desc">
+    <div class="cine-copy">
+      <p class="cine-eyebrow">Sultanbeyli · İstanbul · 2010'dan beri</p>
+      <h1 class="cine-title">
+        <span class="cine-line"><span>Pencerenize</span></span>
+        <span class="cine-line"><span><em>Değer Katan</em></span></span>
+        <span class="cine-line"><span>Perdeler</span></span>
+      </h1>
+      <p class="cine-subtitle">Jaluzi, Stor ve Perde Uzmanlığı</p>
+      <p class="cine-desc">
       15 yıllık tecrübemizle evinizin ve işyerinizin atmosferini dönüştürüyoruz. Ücretsiz keşif, profesyonel ölçüm ve kusursuz montaj ile size özel çözümler sunuyoruz.
     </p>
-    <div class="ch-buttons">
+    <div class="cine-buttons">
       <a href="https://wa.me/905423313413?text=Merhaba,%20ücretsiz%20ölçüm%20randevusu%20almak%20istiyorum." class="btn-primary" target="_blank">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.286a.75.75 0 00.921.921l5.441-1.471A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.196-1.351l-.367-.213-3.805 1.029 1.029-3.805-.213-.367A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         Ücretsiz Randevu Al
@@ -684,7 +693,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="ch-stats">
+    <div class="cine-stats">
       <div>
         <div class="stat-number">15<em>+</em></div>
         <div class="stat-label">Yıl Deneyim</div>
@@ -699,6 +708,21 @@
       </div>
     </div>
     </div>
+
+    <div class="cine-meta" aria-hidden="true">
+      <div class="cine-captions">
+<?php foreach ($heroSlides as $i => $s): ?>
+        <p class="cine-caption<?= $i ? '' : ' is-active' ?>"><span class="cine-num"><?= sprintf('%02d', $i + 1) ?></span><?= e($s['label']) ?> <em><?= e($s['sub']) ?></em></p>
+<?php endforeach; ?>
+      </div>
+      <div class="cine-bars">
+<?php foreach ($heroSlides as $s): ?>
+        <span><i></i></span>
+<?php endforeach; ?>
+      </div>
+    </div>
+
+    <p class="cine-cue" aria-hidden="true"><span>Kaydırın</span><i></i></p>
   </div>
 </section>
 
@@ -1083,6 +1107,6 @@
 </a>
 
 <script src="main.js?v=3"></script>
-<script src="home.js?v=1"></script>
+<script src="home.js?v=2"></script>
 </body>
 </html>
