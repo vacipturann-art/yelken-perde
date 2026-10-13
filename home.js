@@ -1,13 +1,21 @@
 /* Yelken Perde — Ana sayfa kaydırma efektleri (sinematik giriş + yakınlaşan kolaj)
    Sadece <html class="motion-ok"> iken çalışır; değerleri CSS değişkeni olarak yazar. */
-// Menü: girişten aşağı inilince logo küçülür ve krem zemine geçer (hareket ayarından bağımsız)
+// Menü: aşağı kaydırınca gizlenir; girişten sonra görünürse logo krem zemine geçer (hareket ayarından bağımsız)
 (function () {
   const hero = document.querySelector('.cine-hero');
   if (!hero) return;
   let queued = false;
+  let lastY = window.scrollY;
   const update = () => {
     queued = false;
-    document.body.classList.toggle('past-hero', hero.getBoundingClientRect().bottom < 140);
+    const y = window.scrollY;
+    const body = document.body;
+    body.classList.toggle('past-hero', hero.getBoundingClientRect().bottom < 140);
+    // Aşağı kaydırınca menüyü gizle, yukarı kaydırınca ya da en üstte göster
+    if (body.classList.contains('menu-open') || y < 80) body.classList.remove('nav-hidden');
+    else if (y > lastY + 4) body.classList.add('nav-hidden');
+    else if (y < lastY - 4) body.classList.remove('nav-hidden');
+    lastY = y;
   };
   window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
   update();

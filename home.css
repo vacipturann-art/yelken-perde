@@ -17,19 +17,29 @@ body.home nav.scrolled {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 16px clamp(20px, 3vw, 44px);
+  padding: 18px clamp(24px, 7vw, 120px);
   background: transparent;
   border: 0;
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   pointer-events: none;   /* boş alanlar arkadaki sayfaya tıklanabilir kalsın */
+  transition: transform 0.45s cubic-bezier(.2,.7,.2,1), opacity 0.35s;
 }
 
 body.home nav > * { pointer-events: auto; }
 
+/* Aşağı kaydırınca menü gizlenir, yukarı kaydırınca geri gelir */
+body.home.nav-hidden nav {
+  transform: translateY(-120%);
+  opacity: 0;
+}
+
+body.home.nav-hidden nav > * { pointer-events: none; }
+
 body.home .nav-logo {
   justify-self: start;
+  align-self: center;
   display: grid;
   padding: 0;
   border-radius: 16px;
@@ -113,7 +123,7 @@ body.home .nav-cta {
   body.home nav.scrolled {
     display: flex;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 12px 20px;
   }
 
   body.home .nav-logo img,
@@ -316,7 +326,7 @@ body.home .nav-cta {
 .cine-meta {
   position: absolute;
   z-index: 2;
-  right: clamp(24px, 5vw, 80px);
+  right: clamp(24px, 7vw, 120px);
   bottom: clamp(48px, 11vh, 120px);
   width: 280px;
   color: #fff;
