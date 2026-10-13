@@ -1,16 +1,30 @@
 /* Yelken Perde — Ana sayfa kaydırma efektleri (sinematik giriş + yakınlaşan kolaj)
    Sadece <html class="motion-ok"> iken çalışır; değerleri CSS değişkeni olarak yazar. */
-// Menü: giriş bölümü bitip sayfa kaymaya başlayınca gizlenir; sonra görünürse logo krem zemine geçer
+// Menü: giriş bölümü bitip sayfa kaymaya başlayınca gizlenir; logo rengi altındaki bölüme göre değişir
 (function () {
   const hero = document.querySelector('.cine-hero');
   if (!hero) return;
+  const logo = document.querySelector('#navbar .nav-logo');
+  // Logonun altında kalabilecek koyu bölümler
+  const DARK = '#hero, .marquee-section, #urunler-preview, #surec, .randevu-right, footer, .zoom-collage.is-full';
   let queued = false;
   let lastY = window.scrollY;
+
+  // Logonun hizasında sayfada hangi bölüm var: koyuysa açık logo, açıksa koyu logo
+  const onLight = () => {
+    if (!logo) return false;
+    const r = logo.getBoundingClientRect();
+    const x = r.left + r.width / 2;
+    const y = 60;
+    const under = document.elementsFromPoint(x, y).find((el) => !el.closest('#navbar'));
+    return !!under && !under.closest(DARK);
+  };
   const update = () => {
     queued = false;
     const y = window.scrollY;
     const body = document.body;
     body.classList.toggle('past-hero', hero.getBoundingClientRect().bottom < 140);
+    body.classList.toggle('nav-on-light', onLight());
     // Giriş fotoğrafları değişirken sahne sabit durur, menü görünür kalır.
     // Sayfa gerçekten kaymaya başlayınca (giriş bölümü bitince) aşağı kaydırmada gizlenir,
     // yukarı kaydırmada geri gelir.

@@ -29,7 +29,7 @@
 
 <!-- CSS -->
 <link rel="stylesheet" href="styles.css?v=3">
-<link rel="stylesheet" href="home.css?v=4">
+<link rel="stylesheet" href="home.css?v=5">
 <script>if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-ok');</script>
 
 <!-- Structured Data (SEO) -->
@@ -1109,6 +1109,6 @@ $heroSlides = [
 </a>
 
 <script src="main.js?v=3"></script>
-<script src="home.js?v=5"></script>
+<script src="home.js?v=6"></script>
 </body>
 </html>
